@@ -1,0 +1,39 @@
+{
+  "name": "silverfoxy/animate_dead",
+  "description": "Take logs, rebuild application coverage",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Babak Amin Azad",
+      "email": "baminazad@cs.stonybrook.edu"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../malmax/",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "path",
+      "url": "../WUP_PHPLogParser/",
+      "options": {
+        "symlink": true
+      }
+    }
+  ],
+  "require": {
+    "abiusx/malmax": "@dev",
+    "silverfoxy/wup-phplogparser": "@dev",
+    "myclabs/deep-copy": "^1.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "AnimateDead\\": "lib/AnimateDead/",
+      "AnimateDead\\Tests": "test/"
+    }
+  }
+}
