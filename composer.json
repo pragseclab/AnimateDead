@@ -12,28 +12,18 @@
   "repositories": [
     {
       "type": "path",
-      "url": "../malmax/",
-      "options": {
-        "symlink": true
-      }
-    },
-    {
-      "type": "path",
-      "url": "../WUP_PHPLogParser/",
-      "options": {
-        "symlink": true
-      }
+      "url": "./vendor/silverfoxy/malmax/"
     }
   ],
   "require": {
-    "abiusx/malmax": "@dev",
-    "silverfoxy/wup-phplogparser": "@dev",
-    "myclabs/deep-copy": "^1.9"
+    "silverfoxy/malmax": "@dev",
+    "myclabs/deep-copy": "^1.9",
+    "phpunit/phpunit": "^9.3"
   },
   "autoload": {
     "psr-4": {
       "AnimateDead\\": "lib/AnimateDead/",
-      "AnimateDead\\Tests": "test/"
+      "AnimateDead\\Tests\\": "test/"
     }
   }
 }

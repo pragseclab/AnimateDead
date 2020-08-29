@@ -38,7 +38,7 @@ if (isset($argc))
     $session_variables = [];
     $cookies = [];
     // Clean up execution log
-    file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/malmax/index_logs.txt', '');
+    file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/index_logs.txt', '');
     foreach ($flows as $flow) {
         foreach ($flow as $log_entry) {
             $init_env['_SESSION'] = $session_variables;
@@ -73,7 +73,7 @@ if (isset($argc))
             // Execute script
             $engine->start($target_file);
             // Write output to file
-            file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/malmax/output.txt', $engine->output, FILE_APPEND);
+            file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/output.txt', $engine->output, FILE_APPEND);
             if ($engine->is_child) {
                 // We don't want forked processes to work outside the context of a single request
                 echo 'Child process finished.'.PHP_EOL;
