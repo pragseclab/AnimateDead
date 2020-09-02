@@ -5,6 +5,9 @@
 <!--      <directory suffix=".php">classes</directory>-->
 <!--    </include>-->
 <!--  </coverage>-->
+  <php>
+    <const name="EXECUTED_FROM_PHPUNIT" value="true" />
+  </php>
   <testsuites>
     <testsuite name="AnimateDead Test Suite">
       <directory>./test/</directory>
