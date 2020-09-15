@@ -43,6 +43,7 @@ if (isset($argc))
         foreach ($flow as $log_entry) {
             $init_env['_SESSION'] = $session_variables;
             $init_env['_COOKIE'] = $cookies;
+            $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($log_entry->verb);
             $engine = new PHPAnalyzer($init_env, $predefined_constants);
             $engine->direct_output = false;
             // $engine->direct_output = true;
@@ -61,6 +62,7 @@ if (isset($argc))
                 $engine->symbolic_parameters = $symbolic_parameters;
                 $engine->symbolic_functions = $symbolic_functions;
                 $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
+
             }
             elseif (strcasecmp($verb, 'GET') === 0) {
                 $engine->concolic = false;
