@@ -12,8 +12,8 @@ function dvwaRedirect( $pLocation ) {
     exit;
 }
 
-if (array_key_exists ("session_token", $_SESSION)) {
-    $session_token = $_SESSION[ 'session_token' ];
+if (array_key_exists ("session_token", $_POST)) {
+    $session_token = $_POST[ 'session_token' ];
 } else {
     $session_token = "";
 }
