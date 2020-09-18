@@ -23,6 +23,7 @@ if (isset($argc))
     $symbolic_parameters = Utils::get_symbolic_parameters($config_file_path);
     $symbolic_functions = Utils::get_symbolic_functions($config_file_path);
     $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file_path);
+    $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file_path);
     // Parse logs
     $log_file_path = $options['l'];
     $application_root_dir = $options['r'];
@@ -46,6 +47,7 @@ if (isset($argc))
             $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($log_entry->verb);
             $engine = new PHPAnalyzer($init_env, $predefined_constants);
             $engine->direct_output = false;
+            $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
             // $engine->direct_output = true;
             if (isset($options['v'])) {
                 $engine->verbose = $options['v'];

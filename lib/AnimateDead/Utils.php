@@ -38,6 +38,12 @@ Class Utils {
         $symbolic_parameters = $config_json['symbolic_parameters'];
         return $symbolic_parameters;
     }
+    public static function get_symbolic_loop_iterations(string $config='config.json') {
+        $config_json = file_get_contents($config);
+        $config_json = json_decode($config_json, true);
+        $symbolic_loop_iteration = $config_json['symbolic_loop_iteration'];
+        return $symbolic_loop_iteration;
+    }
     public static function get_symbolic_functions(string $config='config.json') {
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);

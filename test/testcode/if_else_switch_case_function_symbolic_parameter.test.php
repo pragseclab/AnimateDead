@@ -1,11 +1,8 @@
 <?php
 
-$ids = PMA_isValid($_POST['id'], 'scalar') ? $_POST['id'] : null;
-$vids = explode(',', $ids);
-$vals = PMA_isValid($_POST['values'], 'scalar') ? $_POST['values'] : null;
 function PMA_isValid(&$var, $type = 'length', $compare = null)
 {
-    if (! isset($var)) {
+    if (!isset($var)) {
         // var is not even set
         return false;
     }
@@ -83,3 +80,11 @@ function PMA_isValid(&$var, $type = 'length', $compare = null)
 
     return false;
 }
+
+$ids = PMA_isValid($_POST['id'], 'scalar') ? 'ids,were,valid' : null;
+$vids = explode(',', $ids)[0];
+$vals = PMA_isValid($_POST['id'], 'scalar') ? 'vals were valid' : null;
+
+echo 'ids: '.$ids.PHP_EOL;
+echo 'vids: '.$vids.PHP_EOL;
+echo 'vals: '.$vals.PHP_EOL;

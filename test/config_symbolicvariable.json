@@ -65,5 +65,6 @@
       "mysqli_query",
       "mysqli_real_query",
       "mysqli_send_query"
-  ]
+  ],
+  "symbolic_loop_iteration": 2
 }

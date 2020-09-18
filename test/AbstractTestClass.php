@@ -40,10 +40,12 @@ class AbstractTestClass extends TestCase
         $symbolic_parameters = Utils::get_symbolic_parameters($config_file);
         $symbolic_functions = Utils::get_symbolic_functions($config_file);
         $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file);
+        $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file);
         $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($http_method);
         // Prepare the engine
         $engine = new PHPAnalyzer($init_env, $predefined_constants);
         $engine->direct_output = false;
+        $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
         if (strcasecmp($http_method, 'POST') === 0) {
             $engine->concolic = true;
             $engine->diehard = false;
