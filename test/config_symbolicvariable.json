@@ -35,7 +35,6 @@
     "mysql_num_rows",
     "mysql_query",
     "mysql_result",
-    "mysqli_connect",
     "mysqli_affected_rows",
     "mysqli_field_count",
     "mysqli_insert_id",
@@ -65,6 +64,11 @@
       "mysqli_query",
       "mysqli_real_query",
       "mysqli_send_query"
+  ],
+  "symbolic_methods": [
+  ],
+  "input_sensitive_symbolic_methods": [
+    "mysqli/query"
   ],
   "symbolic_loop_iteration": 2
 }

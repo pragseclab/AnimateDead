@@ -40,6 +40,8 @@ class AbstractTestClass extends TestCase
         $symbolic_parameters = Utils::get_symbolic_parameters($config_file);
         $symbolic_functions = Utils::get_symbolic_functions($config_file);
         $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file);
+        $symbolic_methods = Utils::get_symbolic_methods($config_file);
+        $input_sensitive_symbolic_methods = Utils::get_input_sensitive_symbolic_methods($config_file);
         $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file);
         $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($http_method);
         // Prepare the engine
@@ -52,6 +54,8 @@ class AbstractTestClass extends TestCase
             $engine->symbolic_parameters = $symbolic_parameters;
             $engine->symbolic_functions = $symbolic_functions;
             $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
+            $engine->symbolic_methods = $symbolic_methods;
+            $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
         }
         elseif (strcasecmp($http_method, 'GET') === 0) {
             $engine->concolic = false;

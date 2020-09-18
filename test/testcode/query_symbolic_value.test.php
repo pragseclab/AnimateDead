@@ -1,9 +1,9 @@
 <?php
 
-$hashedPassword = PMA_getHashedPassword($_POST['pma_pw']);
 function PMA_getHashedPassword($password)
 {
-    $result = $GLOBALS['dbi']->fetchSingleRow(
+    $conn = mysqli_connect('localhost:3306',  'root',  'root');
+    $result = $conn->query(
         "SELECT PASSWORD('" . $password . "') AS `password`;"
     );
 
@@ -11,3 +11,6 @@ function PMA_getHashedPassword($password)
 
     return $hashedPassword;
 }
+
+$hashedPassword = PMA_getHashedPassword($_POST['pma_pw']);
+echo $hashedPassword;

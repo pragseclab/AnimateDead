@@ -1,7 +1,5 @@
 <?php
 
-$what = PMA_securePath($_POST['what']);
-
 function PMA_securePath($path)
 {
     // change .. to .
@@ -9,3 +7,6 @@ function PMA_securePath($path)
 
     return $path;
 } // end function
+
+$what = PMA_securePath($_POST['what']);
+echo $what;
