@@ -1,8 +1,8 @@
 <?php
 
-public function escapeString($link, $str)
+function escapeString($str)
 {
-    return mysqli_real_escape_string($link, $str);
+    return mysqli_real_escape_string($str);
 }
 
-escapeString($_POST['pma_pw']);
+echo escapeString($_POST['pma_pw']);
