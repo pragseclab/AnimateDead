@@ -15,10 +15,12 @@
   "symbolic_parameters": [
     "_POST",
     "_REQUEST",
-    "_COOKIE"
+    "_COOKIE",
+    "_SESSION"
   ],
   "symbolic_functions": [
     "test_symbolic_function",
+    "mysqli_connect",
     "phpversion",
     "mysql_errno",
     "mysqli_errno",
@@ -66,9 +68,11 @@
       "mysqli_send_query"
   ],
   "symbolic_methods": [
+    "mysqli/prepare",
+    "PDOStatement/execute",
+    "mysqli/query"
   ],
   "input_sensitive_symbolic_methods": [
-    "mysqli/query"
   ],
   "symbolic_loop_iteration": 2
 }

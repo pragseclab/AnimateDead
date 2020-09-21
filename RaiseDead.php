@@ -23,6 +23,8 @@ if (isset($argc))
     $symbolic_parameters = Utils::get_symbolic_parameters($config_file_path);
     $symbolic_functions = Utils::get_symbolic_functions($config_file_path);
     $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file_path);
+    $symbolic_methods = Utils::get_symbolic_methods($config_file_path);
+    $input_sensitive_symbolic_methods = Utils::get_input_sensitive_symbolic_methods($config_file_path);
     $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file_path);
     // Parse logs
     $log_file_path = $options['l'];
@@ -40,6 +42,7 @@ if (isset($argc))
     $cookies = [];
     // Clean up execution log
     file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/index_logs.txt', '');
+    file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/line_coverage_logs.txt', '');
     foreach ($flows as $flow) {
         foreach ($flow as $log_entry) {
             $init_env['_SESSION'] = $session_variables;
@@ -57,14 +60,16 @@ if (isset($argc))
             $target_file = $log_entry->target_file;
             $status_code = $log_entry->status;
             $parameters = $log_entry->query_string_array;
+            // Set engine's symbolic parameters
+            $engine->symbolic_parameters = $symbolic_parameters;
+            $engine->symbolic_functions = $symbolic_functions;
+            $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
+            $engine->symbolic_methods = $symbolic_methods;
+            $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
             // Set execution engine parameters
             if (strcasecmp($verb, 'POST') === 0) {
                 $engine->concolic = true;
                 $engine->diehard = false;
-                $engine->symbolic_parameters = $symbolic_parameters;
-                $engine->symbolic_functions = $symbolic_functions;
-                $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
-
             }
             elseif (strcasecmp($verb, 'GET') === 0) {
                 $engine->concolic = false;
@@ -86,8 +91,8 @@ if (isset($argc))
                 break;
             }
             // Save $_SESSION variables
-            var_dump($engine->variables['_SESSION']);
-            var_dump($engine->variables['_COOKIE']);
+            // var_dump($engine->variables['_SESSION']);
+            // var_dump($engine->variables['_COOKIE']);
             $session_variables = $engine->variables['_SESSION'];
             $cookies = $engine->variables['_COOKIE'];
         }

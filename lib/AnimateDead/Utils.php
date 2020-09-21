@@ -56,4 +56,16 @@ Class Utils {
         $input_sensitive_symbolic_functions = $config_json['input_sensitive_symbolic_functions'];
         return $input_sensitive_symbolic_functions;
     }
+    public static function get_input_sensitive_symbolic_methods(string $config='config.json') {
+        $config_json = file_get_contents($config);
+        $config_json = json_decode($config_json, true);
+        $input_sensitive_symbolic_methods = $config_json['input_sensitive_symbolic_methods'];
+        return $input_sensitive_symbolic_methods;
+    }
+    public static function get_symbolic_methods(string $config='config.json') {
+        $config_json = file_get_contents($config);
+        $config_json = json_decode($config_json, true);
+        $symbolic_methods = $config_json['symbolic_methods'];
+        return $symbolic_methods;
+    }
 }
