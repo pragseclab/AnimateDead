@@ -41,6 +41,7 @@ class AbstractTestClass extends TestCase
         $symbolic_functions = Utils::get_symbolic_functions($config_file);
         $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file);
         $symbolic_methods = Utils::get_symbolic_methods($config_file);
+        $symbolic_classes = Utils::get_symbolic_classes($config_file);
         $input_sensitive_symbolic_methods = Utils::get_input_sensitive_symbolic_methods($config_file);
         $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file);
         $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($http_method);
@@ -48,17 +49,18 @@ class AbstractTestClass extends TestCase
         $engine = new PHPAnalyzer($init_env, $predefined_constants);
         $engine->direct_output = false;
         $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
+        $engine->symbolic_parameters = $symbolic_parameters;
+        $engine->symbolic_functions = $symbolic_functions;
+        $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
+        $engine->symbolic_methods = $symbolic_methods;
+        $engine->symbolic_classes = $symbolic_classes;
+        $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
         if (strcasecmp($http_method, 'POST') === 0) {
             $engine->concolic = true;
             $engine->diehard = false;
-            $engine->symbolic_parameters = $symbolic_parameters;
-            $engine->symbolic_functions = $symbolic_functions;
-            $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
-            $engine->symbolic_methods = $symbolic_methods;
-            $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
         }
         elseif (strcasecmp($http_method, 'GET') === 0) {
-            $engine->concolic = false;
+            $engine->concolic = true;
             $engine->diehard = false;
         }
         else {
@@ -67,7 +69,9 @@ class AbstractTestClass extends TestCase
         // Execute script
         $file_name = $file_name;
         $engine->start($file_name);
-        $this->output = $engine->output;
+        if (isset($engine->output)) {
+            $this->output = $engine->output;
+        }
         $this->coverage_info = $engine->lineLogger->coverage_info;
         $this->fork_info = $engine->fork_info;
     }

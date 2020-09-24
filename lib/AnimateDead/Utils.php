@@ -68,4 +68,11 @@ Class Utils {
         $symbolic_methods = $config_json['symbolic_methods'];
         return $symbolic_methods;
     }
+
+    public static function get_symbolic_classes(string $config='config.json') {
+        $config_json = file_get_contents($config);
+        $config_json = json_decode($config_json, true);
+        $symbolic_classes = $config_json['symbolic_classes'];
+        return $symbolic_classes;
+    }
 }

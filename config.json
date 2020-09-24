@@ -69,6 +69,9 @@
     "PDO/prepare",
     "PDOStatement/execute"
   ],
+  "symbolic_classes": [
+    "PDO"
+  ],
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
   ],

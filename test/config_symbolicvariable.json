@@ -72,6 +72,9 @@
     "PDOStatement/execute",
     "mysqli/query"
   ],
+  "symbolic_classes": [
+    "PDO"
+  ],
   "input_sensitive_symbolic_methods": [
   ],
   "symbolic_loop_iteration": 2

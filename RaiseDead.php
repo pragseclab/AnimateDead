@@ -24,6 +24,7 @@ if (isset($argc))
     $symbolic_functions = Utils::get_symbolic_functions($config_file_path);
     $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file_path);
     $symbolic_methods = Utils::get_symbolic_methods($config_file_path);
+    $symbolic_classes = Utils::get_symbolic_classes($config_file_path);
     $input_sensitive_symbolic_methods = Utils::get_input_sensitive_symbolic_methods($config_file_path);
     $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file_path);
     // Parse logs
@@ -65,6 +66,7 @@ if (isset($argc))
             $engine->symbolic_functions = $symbolic_functions;
             $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
             $engine->symbolic_methods = $symbolic_methods;
+            $engine->symbolic_classes = $symbolic_classes;
             $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
             // Set execution engine parameters
             if (strcasecmp($verb, 'POST') === 0) {
@@ -72,7 +74,7 @@ if (isset($argc))
                 $engine->diehard = false;
             }
             elseif (strcasecmp($verb, 'GET') === 0) {
-                $engine->concolic = false;
+                $engine->concolic = true;
                 $engine->diehard = false;
             }
             else {
