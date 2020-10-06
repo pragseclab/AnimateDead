@@ -10,7 +10,7 @@ class IsStringOnSymbolTest extends AbstractTestClass {
         $method = 'POST';
         $this->runScript($filename, $method, [], './test/config_symbolicvariable.json');
         $this->assertTrue(in_array(4, $this->getCoveredLines($filename)));
-        $this->assertFalse(in_array(6, $this->getCoveredLines($filename)));
+        $this->assertTrue(in_array(6, $this->getCoveredLines($filename)));
         $this->assertTrue(in_array(8, $this->getCoveredLines($filename)));
     }
 }

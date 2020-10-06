@@ -3,13 +3,12 @@
 namespace AnimateDead\Tests;
 require __DIR__ . '/../vendor/autoload.php';
 
-class NotMysqliConnectTest extends AbstractTestClass {
+class IncludedFileVariableDefinitionTest extends AbstractTestClass {
     public function test() {
         // Path from root of application
-        $filename = './test/testcode/not_mysqli_connect.test.php';
+        $filename = './test/testcode/included_file_variable_definition.test.php';
         $method = 'POST';
         $this->runScript($filename, $method, [], './test/config_symbolicvariable.json');
-        $this->assertTrue(in_array(4, $this->getCoveredLines($filename)));
-        $this->assertTrue(in_array(7, $this->getCoveredLines($filename)));
+        $this->assertStringContainsString('Defined in an included file', $this->output);
     }
 }

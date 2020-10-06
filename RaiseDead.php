@@ -1,5 +1,6 @@
 <?php
 
+use malmax\ExecutionMode;
 use malmax\PHPAnalyzer;
 use AnimateDead\Utils;
 use AnimateDead\LogParser;
@@ -20,7 +21,6 @@ if (isset($argc))
     $config_file_path = 'config.json';
     $init_env = Utils::load_config($config_file_path);
     $predefined_constants = Utils::get_constants($config_file_path);
-    $symbolic_parameters = Utils::get_symbolic_parameters($config_file_path);
     $symbolic_functions = Utils::get_symbolic_functions($config_file_path);
     $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file_path);
     $symbolic_methods = Utils::get_symbolic_methods($config_file_path);
@@ -46,10 +46,17 @@ if (isset($argc))
     file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/line_coverage_logs.txt', '');
     foreach ($flows as $flow) {
         foreach ($flow as $log_entry) {
+            $verb = $log_entry->verb;
+            $target_file = $log_entry->target_file;
+            $status_code = $log_entry->status;
+            $parameters = $log_entry->query_string_array;
+
             $init_env['_SESSION'] = $session_variables;
             $init_env['_COOKIE'] = $cookies;
-            $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($log_entry->verb);
+            $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
+            $init_env['_GET'] = $parameters;
             $engine = new PHPAnalyzer($init_env, $predefined_constants);
+            $engine->execution_mode = ExecutionMode::ONLINE;
             $engine->direct_output = false;
             $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
             // $engine->direct_output = true;
@@ -57,29 +64,27 @@ if (isset($argc))
                 $engine->verbose = $options['v'];
                 // $engine->verbose = 4;
             }
-            $verb = $log_entry->verb;
-            $target_file = $log_entry->target_file;
-            $status_code = $log_entry->status;
-            $parameters = $log_entry->query_string_array;
             // Set engine's symbolic parameters
-            $engine->symbolic_parameters = $symbolic_parameters;
+            $engine->symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($log_entry->verb), $config_file_path);
             $engine->symbolic_functions = $symbolic_functions;
             $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
             $engine->symbolic_methods = $symbolic_methods;
             $engine->symbolic_classes = $symbolic_classes;
             $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
             // Set execution engine parameters
-            if (strcasecmp($verb, 'POST') === 0) {
-                $engine->concolic = true;
-                $engine->diehard = false;
-            }
-            elseif (strcasecmp($verb, 'GET') === 0) {
-                $engine->concolic = true;
-                $engine->diehard = false;
-            }
-            else {
-                throw new Exception($verb . ' VERB isb not supported.');
-            }
+            $engine->concolic = true;
+            $engine->diehard = false;
+            // if (strcasecmp($verb, 'POST') === 0) {
+            //     $engine->concolic = true;
+            //     $engine->diehard = false;
+            // }
+            // elseif (strcasecmp($verb, 'GET') === 0) {
+            //     $engine->concolic = true;
+            //     $engine->diehard = false;
+            // }
+            // else {
+            //     throw new Exception($verb . ' VERB isb not supported.');
+            // }
             echo sprintf('Now processing %s to %s'.PHP_EOL, $verb, $target_file);
             // Execute script
             $engine->start($target_file);
@@ -95,8 +100,8 @@ if (isset($argc))
             // Save $_SESSION variables
             // var_dump($engine->variables['_SESSION']);
             // var_dump($engine->variables['_COOKIE']);
-            $session_variables = $engine->variables['_SESSION'];
-            $cookies = $engine->variables['_COOKIE'];
+            // $session_variables = $engine->variables['_SESSION'];
+            // $cookies = $engine->variables['_COOKIE'];
         }
     }
 

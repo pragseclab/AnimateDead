@@ -32,11 +32,17 @@ Class Utils {
         $defined_constants = unserialize(file_get_contents($config_json['constants']), ['allowed_classes' => false]);
         return $defined_constants;
     }
-    public static function get_symbolic_parameters(string $config='config.json') {
+    public static function get_symbolic_parameters(string $method='POST', string $config='config.json') {
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);
         $symbolic_parameters = $config_json['symbolic_parameters'];
-        return $symbolic_parameters;
+        if (in_array($method, ['GET', 'HEAD', 'OPTIONS', 'TRACE'])) {
+            return $symbolic_parameters['GET'];
+        }
+        elseif (in_array($method, ['POST', 'PUT', 'DELETE', 'PATCH'])) {
+            return $symbolic_parameters['POST'];
+        }
+        trigger_error(sprintf('Unknown HTTP method %s', $method), E_USER_ERROR);
     }
     public static function get_symbolic_loop_iterations(string $config='config.json') {
         $config_json = file_get_contents($config);

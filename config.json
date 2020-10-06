@@ -12,12 +12,18 @@
     "server_port": "80",
     "server_signature": "<address>Apache/2.4.29 (Ubuntu) Server at localhost port 80</address>"
   },
-  "symbolic_parameters": [
-    "_POST",
-    "_REQUEST",
-    "_COOKIE",
-    "_SESSION"
-  ],
+  "symbolic_parameters": {
+    "GET": [
+      "_COOKIE",
+      "_SESSION"
+    ],
+    "POST": [
+      "_POST",
+      "_REQUEST",
+      "_COOKIE",
+      "_SESSION"
+    ]
+  },
   "symbolic_functions": [
     "mysqli_connect",
     "mysql_errno",
