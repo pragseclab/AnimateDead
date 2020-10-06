@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AnimateDead\Tests;
 require __DIR__ . '/../vendor/autoload.php';
 
+use malmax\ExecutionMode;
 use malmax\PHPAnalyzer;
 use PHPUnit\Framework\TestCase;
 use AnimateDead\Utils;
@@ -47,6 +48,7 @@ class AbstractTestClass extends TestCase
         $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($http_method);
         // Prepare the engine
         $engine = new PHPAnalyzer($init_env, $predefined_constants);
+        $engine->execution_mode = ExecutionMode::ONLINE;
         $engine->direct_output = false;
         $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
         $engine->symbolic_parameters = $symbolic_parameters;

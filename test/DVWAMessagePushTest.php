@@ -3,13 +3,12 @@
 namespace AnimateDead\Tests;
 require __DIR__ . '/../vendor/autoload.php';
 
-class NotMysqliConnectTest extends AbstractTestClass {
+class DVWAMessagePushTest extends AbstractTestClass {
     public function test() {
         // Path from root of application
-        $filename = './test/testcode/not_mysqli_connect.test.php';
+        $filename = './test/testcode/dvwaMessagePush.test.php';
         $method = 'POST';
         $this->runScript($filename, $method, [], './test/config_symbolicvariable.json');
-        $this->assertTrue(in_array(4, $this->getCoveredLines($filename)));
-        $this->assertTrue(in_array(7, $this->getCoveredLines($filename)));
+        $this->assertStringContainsString('SymbolicVariable for $arr[', $this->output);
     }
 }
