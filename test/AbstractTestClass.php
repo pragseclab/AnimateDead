@@ -38,7 +38,7 @@ class AbstractTestClass extends TestCase
         // Parse config file
         $init_env = Utils::load_config($config_file);
         $predefined_constants = Utils::get_constants($config_file);
-        $symbolic_parameters = Utils::get_symbolic_parameters($config_file);
+        $symbolic_parameters = Utils::get_symbolic_parameters($http_method, $config_file);
         $symbolic_functions = Utils::get_symbolic_functions($config_file);
         $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file);
         $symbolic_methods = Utils::get_symbolic_methods($config_file);
