@@ -26,6 +26,8 @@
   },
   "symbolic_functions": [
     "mysqli_connect",
+    "mysqli_real_connect",
+    "mysqli_init",
     "mysql_errno",
     "mysqli_errno",
     "mysql_num_rows",
