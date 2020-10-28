@@ -44,6 +44,18 @@ Class Utils {
         }
         trigger_error(sprintf('Unknown HTTP method %s', $method), E_USER_ERROR);
     }
+    public static function get_immutable_symbolic_variables(string $config='config.json') {
+        $config_json = file_get_contents($config);
+        $config_json = json_decode($config_json, true);
+        $immutable_symbolic_variables = $config_json['immutable_symbolic_variables'];
+        return $immutable_symbolic_variables;
+    }
+    public static function get_max_output_length(string $config='config.json') {
+        $config_json = file_get_contents($config);
+        $config_json = json_decode($config_json, true);
+        $max_output_length = $config_json['max_output_length'];
+        return $max_output_length;
+    }
     public static function get_symbolic_loop_iterations(string $config='config.json') {
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);

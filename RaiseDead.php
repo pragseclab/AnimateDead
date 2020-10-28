@@ -71,6 +71,8 @@ if (isset($argc))
             $engine->symbolic_methods = $symbolic_methods;
             $engine->symbolic_classes = $symbolic_classes;
             $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
+            $engine->immutable_symbolic_variables = Utils::get_immutable_symbolic_variables($config_file_path);
+            $engine->max_output_length = Utils::get_max_output_length($config_file_path);
             // Set execution engine parameters
             $engine->concolic = true;
             $engine->diehard = false;

@@ -12,6 +12,8 @@
     "server_port": "80",
     "server_signature": "<address>Apache/2.4.29 (Ubuntu) Server at localhost port 80</address>"
   },
+  "immutable_symbolic_variables":  false,
+  "max_output_length": false,
   "symbolic_parameters": {
     "GET": [
       "_COOKIE",
