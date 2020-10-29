@@ -3,6 +3,9 @@
 namespace AnimateDead;
 
 Class Utils {
+
+    public static $PATH_PREFIX = '/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/animate_dead/logs/';
+
     public static function load_config(string $config='config.json') {
         $init_environ=[];
         $superglobals=array_flip(explode(",$",'_GET,$_POST,$_FILES,$_COOKIE,$_SESSION,$_SERVER,$_REQUEST,$_ENV,$GLOBALS'));
@@ -92,5 +95,20 @@ Class Utils {
         $config_json = json_decode($config_json, true);
         $symbolic_classes = $config_json['symbolic_classes'];
         return $symbolic_classes;
+    }
+
+    public static function append_reanimation_log($pid, $state_hash) {
+        file_put_contents(self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt', $state_hash.PHP_EOL, FILE_APPEND);
+    }
+
+    public static function load_reanimation_log($pid) {
+        $reanimation_log_file = self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt';
+        if (file_exists($reanimation_log_file)) {
+            $state_hashes = file($reanimation_log_file, FILE_IGNORE_NEW_LINES);
+            return $state_hashes;
+        }
+        else {
+            trigger_error('Reanimation log file not found at: '.$reanimation_log_file);
+        }
     }
 }

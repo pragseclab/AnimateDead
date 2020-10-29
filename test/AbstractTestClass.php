@@ -33,7 +33,7 @@ class AbstractTestClass extends TestCase
      * @param string $config_file
      * @return void
      */
-    public function runScript(string $file_name, string $http_method, array $parameters = [], string $config_file='./config.json')
+    public function runScript(string $file_name, string $http_method, array $parameters = [], string $config_file='./config.json', ?int $reanimation_id = null)
     {
         // Parse config file
         $init_env = Utils::load_config($config_file);
@@ -59,6 +59,12 @@ class AbstractTestClass extends TestCase
         $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
         $engine->immutable_symbolic_variables = Utils::get_immutable_symbolic_variables($config_file);
         $engine->max_output_length = Utils::get_max_output_length($config_file);
+
+        if ($reanimation_id !== null) {
+            Utils::$PATH_PREFIX .= '../test/testcode/logs/';
+            $engine->reanimate = true;
+            $engine->reanimate_transcript = Utils::load_reanimation_log($reanimation_id);
+        }
 
         if (strcasecmp($http_method, 'POST') === 0) {
             $engine->concolic = true;

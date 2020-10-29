@@ -9,11 +9,11 @@ use AnimateDead\Request2FS;
 ini_set("memory_limit",-1);
 require __DIR__.'/vendor/autoload.php';
 
-$usage='Usage: php RaiseDead.php -l access.log -r application/root/dir -u uri_prefix [-i ip_addr -v verbosity]'.PHP_EOL;
+$usage='Usage: php RaiseDead.php -l access.log -r application/root/dir -u uri_prefix -i ip_addr [-v verbosity -ra pid]'.PHP_EOL;
 if (isset($argc))
 {
     // Parse command line arguments
-    $options=getopt('l:r:u:i:v',['log', 'root_dir', 'uri_prefix', 'ip_addr']);
+    $options=getopt('l:r:u:i:v:ra',['log', 'root_dir', 'uri_prefix', 'ip_addr', 'verbosity', 'reanimation_pid']);
     if (!isset($options['l']) || !isset($options['r']) || !isset($options['u']) || !isset($options['i'])) {
         die($usage);
     }
@@ -42,8 +42,7 @@ if (isset($argc))
     $session_variables = [];
     $cookies = [];
     // Clean up execution log
-    file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/index_logs.txt', '');
-    file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/line_coverage_logs.txt', '');
+    file_put_contents(Utils::$PATH_PREFIX.'line_coverage_logs.txt', '');
     foreach ($flows as $flow) {
         foreach ($flow as $log_entry) {
             $verb = $log_entry->verb;
@@ -57,6 +56,11 @@ if (isset($argc))
             $init_env['_GET'] = $parameters ?? [];
             $engine = new PHPAnalyzer($init_env, $predefined_constants);
             $engine->execution_mode = ExecutionMode::ONLINE;
+            // Reanimation mode is enabled
+            if (isset($options['ra'])) {
+                $engine->reanimate = true;
+                $engine->reanimate_transcript = Utils::load_reanimation_log($options['ra']);
+            }
             $engine->direct_output = false;
             $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
             // $engine->direct_output = true;
@@ -91,7 +95,7 @@ if (isset($argc))
             // Execute script
             $engine->start($target_file);
             // Write output to file
-            file_put_contents('/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/output.txt', $engine->output, FILE_APPEND);
+            file_put_contents(Utils::$PATH_PREFIX.'output.txt', $engine->output, FILE_APPEND);
             if ($engine->is_child) {
                 // We don't want forked processes to work outside the context of a single request
                 echo 'Child process finished.'.PHP_EOL;
