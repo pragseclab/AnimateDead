@@ -98,7 +98,9 @@ Class Utils {
     }
 
     public static function append_reanimation_log($pid, $state_hash) {
-        file_put_contents(self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt', $state_hash.PHP_EOL, FILE_APPEND);
+        foreach ($state_hash as $hash) {
+            file_put_contents(self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt', $hash.PHP_EOL, FILE_APPEND);
+        }
     }
 
     public static function load_reanimation_log($pid) {

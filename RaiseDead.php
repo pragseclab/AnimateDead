@@ -9,12 +9,12 @@ use AnimateDead\Request2FS;
 ini_set("memory_limit",-1);
 require __DIR__.'/vendor/autoload.php';
 
-$usage='Usage: php RaiseDead.php -l access.log -r application/root/dir -u uri_prefix -i ip_addr [-v verbosity -ra pid]'.PHP_EOL;
+$usage='Usage: php RaiseDead.php -l access.log -r application/root/dir -u uri_prefix [-i ip_addr -v verbosity --reanimationpid pid]'.PHP_EOL;
 if (isset($argc))
 {
     // Parse command line arguments
-    $options=getopt('l:r:u:i:v:ra',['log', 'root_dir', 'uri_prefix', 'ip_addr', 'verbosity', 'reanimation_pid']);
-    if (!isset($options['l']) || !isset($options['r']) || !isset($options['u']) || !isset($options['i'])) {
+    $options=getopt('l:r:u:i::v::t:',['log:', 'root_dir:', 'uri_prefix:', 'ip_addr::', 'verbosity::', 'reanimationpid::']);
+    if (!isset($options['l']) || !isset($options['r']) || !isset($options['u'])) {
         die($usage);
     }
     // Load config file
@@ -42,7 +42,21 @@ if (isset($argc))
     $session_variables = [];
     $cookies = [];
     // Clean up execution log
-    file_put_contents(Utils::$PATH_PREFIX.'line_coverage_logs.txt', '');
+    if (!isset($options['reanimationpid'])) {
+        file_put_contents(Utils::$PATH_PREFIX . 'line_coverage_logs.txt', '');
+        $reanimation_logs = glob(Utils::$PATH_PREFIX . 'reanimation_logs/*.txt');
+        foreach ($reanimation_logs as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+        $line_coverage_logs = glob(Utils::$PATH_PREFIX . 'line_coverage_logs/*.txt');
+        foreach ($line_coverage_logs as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
     foreach ($flows as $flow) {
         foreach ($flow as $log_entry) {
             $verb = $log_entry->verb;
@@ -57,9 +71,9 @@ if (isset($argc))
             $engine = new PHPAnalyzer($init_env, $predefined_constants);
             $engine->execution_mode = ExecutionMode::ONLINE;
             // Reanimation mode is enabled
-            if (isset($options['ra'])) {
+            if (isset($options['reanimationpid'])) {
                 $engine->reanimate = true;
-                $engine->reanimate_transcript = Utils::load_reanimation_log($options['ra']);
+                $engine->reanimate_transcript = Utils::load_reanimation_log($options['reanimationpid']);
             }
             $engine->direct_output = false;
             $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
@@ -96,6 +110,9 @@ if (isset($argc))
             $engine->start($target_file);
             // Write output to file
             file_put_contents(Utils::$PATH_PREFIX.'output.txt', $engine->output, FILE_APPEND);
+            if (isset($engine->termination_reason)) {
+                $engine->lineLogger->logTerminationReason($engine->termination_reason);
+            }
             if ($engine->is_child) {
                 // We don't want forked processes to work outside the context of a single request
                 echo 'Child process finished.'.PHP_EOL;
