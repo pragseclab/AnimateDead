@@ -1,3 +1,0 @@
-[submodule "vendor/silverfoxy/malmax"]
-	path = vendor/silverfoxy/malmax
-	url = git@github.com:silverfoxy/malmax.git

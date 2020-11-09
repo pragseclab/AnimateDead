@@ -4,6 +4,7 @@ namespace AnimateDead;
 
 Class Utils {
 
+    // public static $PATH_PREFIX = '/home/ubuntu/animate_dead/logs/';
     public static $PATH_PREFIX = '/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/animate_dead/logs/';
 
     public static function load_config(string $config='config.json') {

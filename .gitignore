@@ -3,7 +3,9 @@ composer.lock
 index_logs.txt
 phpunit.phar
 phpunit-9.0.phar
+vendor
 vendor/silverfoxy/malmax/index_logs.txt
 vendor/silverfoxy/malmax/output.txt
 vendor/silverfoxy/malmax/stats.txt
 vendor/silverfoxy/malmax/php-emul/cache/
+logs/
