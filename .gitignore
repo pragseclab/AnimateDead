@@ -1,4 +1,5 @@
 access_log_test.txt
+phpunit.xml.dist.bak
 composer.lock
 index_logs.txt
 phpunit.phar
