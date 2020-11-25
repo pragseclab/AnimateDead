@@ -2,12 +2,14 @@
 
 namespace AnimateDead;
 
+use PHPEmul\ReanimationEntry;
+
 Class Utils {
 
-    // public static $PATH_PREFIX = '/home/ubuntu/animate_dead/logs/';
-    public static $PATH_PREFIX = '/mnt/c/Users/baminazad/Documents/Pragsec/autodebloating/animate_dead/logs/';
+    public static $PATH_PREFIX = '/home/ubuntu/animate_dead/logs/';
 
     public static function load_config(string $config='config.json') {
+        self::$PATH_PREFIX = include('env.php');
         $init_environ=[];
         $superglobals=array_flip(explode(",$",'_GET,$_POST,$_FILES,$_COOKIE,$_SESSION,$_SERVER,$_REQUEST,$_ENV,$GLOBALS'));
         foreach ($superglobals as $k=>$sg)
@@ -98,17 +100,16 @@ Class Utils {
         return $symbolic_classes;
     }
 
-    public static function append_reanimation_log($pid, $state_hash) {
-        foreach ($state_hash as $hash) {
-            file_put_contents(self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt', $hash.PHP_EOL, FILE_APPEND);
-        }
+    public static function append_reanimation_log($pid, array $reanimation_points) {
+        file_put_contents(self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt', serialize($reanimation_points));
     }
 
     public static function load_reanimation_log($pid) {
         $reanimation_log_file = self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt';
         if (file_exists($reanimation_log_file)) {
-            $state_hashes = file($reanimation_log_file, FILE_IGNORE_NEW_LINES);
-            return $state_hashes;
+            $reanimation_log = file_get_contents($reanimation_log_file);
+            $reanimation_points = unserialize($reanimation_log, ['ReanimationEntry']);
+            return $reanimation_points;
         }
         else {
             trigger_error('Reanimation log file not found at: '.$reanimation_log_file);

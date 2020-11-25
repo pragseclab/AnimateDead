@@ -31,6 +31,7 @@ class AbstractTestClass extends TestCase
      * @param string $http_method
      * @param array $parameters
      * @param string $config_file
+     * @param int|null $reanimation_id
      * @return void
      */
     public function runScript(string $file_name, string $http_method, array $parameters = [], string $config_file='./config.json', ?int $reanimation_id = null)
@@ -63,7 +64,7 @@ class AbstractTestClass extends TestCase
         if ($reanimation_id !== null) {
             Utils::$PATH_PREFIX .= '../test/testcode/logs/';
             $engine->reanimate = true;
-            $engine->reanimate_transcript = Utils::load_reanimation_log($reanimation_id);
+            $engine->reanimation_transcript = Utils::load_reanimation_log($reanimation_id);
         }
 
         if (strcasecmp($http_method, 'POST') === 0) {

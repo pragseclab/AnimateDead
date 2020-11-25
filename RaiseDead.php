@@ -73,7 +73,7 @@ if (isset($argc))
             // Reanimation mode is enabled
             if (isset($options['reanimationpid'])) {
                 $engine->reanimate = true;
-                $engine->reanimate_transcript = Utils::load_reanimation_log($options['reanimationpid']);
+                $engine->reanimation_transcript = Utils::load_reanimation_log($options['reanimationpid']);
             }
             $engine->direct_output = false;
             $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
