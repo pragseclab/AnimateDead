@@ -2,6 +2,7 @@
 
 namespace AnimateDead;
 
+use malmax\PHPAnalyzer;
 use PHPEmul\ReanimationEntry;
 
 Class Utils {
@@ -102,6 +103,22 @@ Class Utils {
 
     public static function append_reanimation_log($pid, array $reanimation_points) {
         file_put_contents(self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt', serialize($reanimation_points));
+    }
+
+    public static function breakpoint($emul, string $filename, int $linenumber=-1) {
+        if (strpos($filename, $emul->current_file)) {
+            if ($linenumber === -1) {
+                return true;
+            }
+            elseif ($emul->current_line === $linenumber) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static function remove_logs($pid) {
+        unlink(self::$PATH_PREFIX.'reanimation_logs/'.$pid.'_reanimation_log.txt');
     }
 
     public static function load_reanimation_log($pid) {

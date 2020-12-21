@@ -68,6 +68,16 @@ if (isset($argc))
             $init_env['_COOKIE'] = $cookies;
             $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
             $init_env['_GET'] = $parameters ?? [];
+            // $init_env['_POST'] = ['pma_username'=>'root',
+            //                       'pma_password'=>'root',
+            //                       'server'=>'1',
+            //                       'target'=>'index.php',
+            //                       'token'=>'53710afd53c4582d9c5210eb4d21ff47'];
+            // $init_env['_REQUEST'] = ['pma_username'=>'root',
+            //     'pma_password'=>'root',
+            //     'server'=>'1',
+            //     'target'=>'index.php',
+            //     'token'=>'53710afd53c4582d9c5210eb4d21ff47'];
             $engine = new PHPAnalyzer($init_env, $predefined_constants);
             $engine->execution_mode = ExecutionMode::ONLINE;
             // Reanimation mode is enabled
