@@ -13,21 +13,19 @@
     "server_signature": "<address>Apache/2.4.29 (Ubuntu) Server at localhost port 80</address>"
   },
   "immutable_symbolic_variables":  false,
-  "max_output_length": 1000,
+  "max_output_length": 5000,
   "symbolic_parameters": {
-    "GET": [
-      "_COOKIE",
-      "_SESSION"
+    "GET2": [
+      "_COOKIE"
     ],
     "POST2": [
       "_COOKIE",
-      "_SESSION"
+      "_SESSION",
+      "_POST"
+    ],
+    "GET": [
     ],
     "POST": [
-      "_POST",
-      "_REQUEST",
-      "_COOKIE",
-      "_SESSION"
     ]
   },
   "symbolic_functions": [

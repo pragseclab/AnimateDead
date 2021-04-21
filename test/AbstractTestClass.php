@@ -48,7 +48,7 @@ class AbstractTestClass extends TestCase
         $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file);
         $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($http_method);
         // Prepare the engine
-        $engine = new PHPAnalyzer($init_env, $predefined_constants);
+        $engine = new PHPAnalyzer($init_env, $http_method, $predefined_constants, new ReanimationCallback(), 'test');
         $engine->execution_mode = ExecutionMode::ONLINE;
         $engine->direct_output = false;
         $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
@@ -121,5 +121,11 @@ class AbstractTestClass extends TestCase
     }
     public function getVariableValue($variable_name) {
         throw new \Exception('getVariableValue($variable_name) not implemented yet.');
+    }
+}
+
+class ReanimationCallback {
+    public function add_reanimation_task() {
+        echo 'Called add_reanimation_task'.PHP_EOL;
     }
 }

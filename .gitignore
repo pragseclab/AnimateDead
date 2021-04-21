@@ -10,3 +10,13 @@ vendor/silverfoxy/malmax/output.txt
 vendor/silverfoxy/malmax/stats.txt
 vendor/silverfoxy/malmax/php-emul/cache/
 logs/
+
+.idea/
+
+.settings/
+
+.buildpath
+
+.phpunit.result.cache
+
+.project
