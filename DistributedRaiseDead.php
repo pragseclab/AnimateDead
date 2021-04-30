@@ -72,7 +72,7 @@ function reanimate(ReanimationState $reanimationState, IAnimateDeadWorker $reani
     start_engine($reanimationState->init_env, $reanimationState->httpverb, $reanimationState->targetfile, $reanimation_callback_object, $reanimationState->reanimation_array);
 }
 
-function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $verbosity=4) {
+function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $execution_id=0, $verbosity=4) {
     // Load config file
     Utils::$PATH_PREFIX = include('lib/AnimateDead/env.php');
     $config_file_path = Utils::get_default_config();
@@ -103,6 +103,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     $engine->input_sensitive_symbolic_methods = $input_sensitive_symbolic_methods;
     $engine->immutable_symbolic_variables = Utils::get_immutable_symbolic_variables($config_file_path);
     $engine->max_output_length = Utils::get_max_output_length($config_file_path);
+    $engine->execution_id = $execution_id;
     // Set execution engine parameters
     $engine->concolic = true;
     $engine->diehard = false;
@@ -118,7 +119,8 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     } finally {
         // Write output to file
         Utils::append_reanimation_log('get_execution', $engine->full_reanimation_transcript);
-        file_put_contents(Utils::$PATH_PREFIX.$correlation_id.'_output.txt', $engine->output, FILE_APPEND);
+        // Disable logging all the output text in a single file
+        // file_put_contents(Utils::$PATH_PREFIX.$correlation_id.'_output.txt', $engine->output, FILE_APPEND);
         if (isset($engine->termination_reason)) {
             $engine->lineLogger->logTerminationReason($engine->termination_reason);
         }

@@ -13,23 +13,21 @@
     "server_signature": "<address>Apache/2.4.29 (Ubuntu) Server at localhost port 80</address>"
   },
   "immutable_symbolic_variables":  false,
-  "max_output_length": false,
+  "max_output_length": 5000,
   "symbolic_parameters": {
     "GET": [
-      "_COOKIE",
-      "_SESSION"
+      "_COOKIE"
     ],
     "POST": [
-      "_POST",
-      "_REQUEST",
       "_COOKIE",
-      "_SESSION"
+      "_SESSION",
+      "_POST"
     ]
   },
   "symbolic_functions": [
-    "test_symbolic_function",
     "mysqli_connect",
-    "phpversion",
+    "mysqli_real_connect",
+    "mysqli_init",
     "mysql_errno",
     "mysqli_errno",
     "mysql_num_rows",
@@ -55,35 +53,37 @@
     "mysqli_send_query"
   ],
   "input_sensitive_symbolic_functions": [
-      "mysql_affected_rows",
-      "mysql_fetch_array",
-      "mysql_fetch_assoc",
-      "mysql_fetch_field",
-      "mysql_fetch_lengths",
-      "mysql_fetch_object",
-      "mysql_insert_id",
-      "mysql_num_fields",
-      "mysql_num_rows",
-      "mysql_query",
-      "mysql_result",
-      "mysqli_affected_rows",
-      "mysqli_field_count",
-      "mysqli_insert_id",
-      "mysqli_multi_query",
-      "mysqli_next_result",
-      "mysqli_query",
-      "mysqli_real_query",
-      "mysqli_send_query"
+    "mysql_affected_rows",
+    "mysql_fetch_array",
+    "mysql_fetch_assoc",
+    "mysql_fetch_field",
+    "mysql_fetch_lengths",
+    "mysql_fetch_object",
+    "mysql_insert_id",
+    "mysql_num_fields",
+    "mysql_num_rows",
+    "mysql_query",
+    "mysql_result",
+    "mysqli_affected_rows",
+    "mysqli_field_count",
+    "mysqli_insert_id",
+    "mysqli_multi_query",
+    "mysqli_next_result",
+    "mysqli_query",
+    "mysqli_real_query",
+    "mysqli_send_query"
   ],
   "symbolic_methods": [
-    "mysqli/prepare",
+    "PDO/prepare",
     "PDOStatement/execute",
-    "mysqli/query"
+    "PMA\\libraries\\DatabaseInterface/getLink",
+    "PMA\\libraries\\DatabaseInterface/tryQuery"
   ],
   "symbolic_classes": [
     "PDO"
   ],
   "input_sensitive_symbolic_methods": [
+    "mysqli/query"
   ],
   "symbolic_loop_iteration": 2
 }

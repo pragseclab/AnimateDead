@@ -79,7 +79,9 @@
   ],
   "symbolic_methods": [
     "PDO/prepare",
-    "PDOStatement/execute"
+    "PDOStatement/execute",
+    "PMA\\libraries\\DatabaseInterface/getLink",
+    "PMA\\libraries\\DatabaseInterface/tryQuery"
   ],
   "symbolic_classes": [
     "PDO"
