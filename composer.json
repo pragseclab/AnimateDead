@@ -11,8 +11,8 @@
   ],
   "repositories": [
     {
-      "type": "path",
-      "url": "./vendor/silverfoxy/malmax/"
+      "type": "vcs",
+      "url": "git@github.com:silverfoxy/malmax.git"
     }
   ],
   "require": {
