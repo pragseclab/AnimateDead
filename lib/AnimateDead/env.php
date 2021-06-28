@@ -5,4 +5,5 @@
 // Remote PHP Server
 // return '/home/ubuntu/animate_dead/logs/';
 // Local WSL2
-return '/mnt/c/Users/baminazad/Documents/Pragsec/distributed_animate_dead/php/client/animate_dead/logs/';
+// return '/mnt/c/Users/baminazad/Documents/Pragsec/distributed_animate_dead/php/client/animate_dead/logs/';
+return __DIR__.'/../../logs/';

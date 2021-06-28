@@ -139,7 +139,7 @@ Class Utils {
     }
 
     public static function log_output($pid, string $output) {
-        file_put_contents(self::$PATH_PREFIX.'line_coverage_logs/'.$pid.'_output.txt', $output, FILE_APPEND);
+        // file_put_contents(self::$PATH_PREFIX.'line_coverage_logs/'.$pid.'_output.txt', $output, FILE_APPEND);
     }
 
     public static function log_forkinfo(string $forkinfo) {
