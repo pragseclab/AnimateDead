@@ -15,17 +15,17 @@
   "immutable_symbolic_variables":  false,
   "max_output_length": 5000,
   "symbolic_parameters": {
-    "GET2": [
+    "GET": [
       "_COOKIE"
     ],
-    "POST2": [
+    "POST": [
       "_COOKIE",
       "_SESSION",
       "_POST"
     ],
-    "GET": [
+    "GET2": [
     ],
-    "POST": [
+    "POST2": [
     ]
   },
   "symbolic_functions": [
