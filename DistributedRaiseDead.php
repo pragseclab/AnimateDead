@@ -76,6 +76,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     // Load config file
     Utils::$PATH_PREFIX = include('lib/AnimateDead/env.php');
     $config_file_path = Utils::get_default_config();
+    $init_env = array_merge_recursive($init_env, Utils::load_config($config_file_path));
     $predefined_constants = Utils::get_constants($config_file_path);
     $symbolic_functions = Utils::get_symbolic_functions($config_file_path);
     $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file_path);
