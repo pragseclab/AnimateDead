@@ -27,6 +27,7 @@ Class Utils {
         $config_json = json_decode($config_json, true);
         $init_environ['_SERVER']['SERVER_NAME'] = $config_json['server']['server_name'];
         $init_environ['_SERVER']['SERVER_ADDR'] = $config_json['server']['server_addr'];
+        $init_environ['_SERVER']['REMOTE_ADDR'] = $config_json['server']['remote_addr'];
         $init_environ['_SERVER']['GATEWAY_INTERFACE'] = $config_json['server']['gateway_interface'];
         $init_environ['_SERVER']['SERVER_SOFTWARE'] = $config_json['server']['server_software'];
         $init_environ['_SERVER']['SERVER_PROTOCOL'] = $config_json['server']['server_protocol'];
