@@ -143,8 +143,8 @@ Class Utils {
     }
 
     public static function log_output($pid, string $output) {
-        if (LOG_OUTPUT) {
-            file_put_contents(self::$PATH_PREFIX.'line_coverage_logs/'.$pid.'_output.txt', $output, FILE_APPEND);
+        if (self::LOG_OUTPUT) {
+            file_put_contents(self::$PATH_PREFIX.'outputs/'.$pid.'_output.txt', $output, FILE_APPEND);
         }
     }
 
