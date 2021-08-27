@@ -8,6 +8,9 @@ use PHPEmul\ReanimationEntry;
 Class Utils {
 
     public static $PATH_PREFIX;
+    // Controls whether stdout is saved to a file.
+    // Occupies too much disk space, use only when required.
+    public const LOG_OUTPUT = false;
 
     public static function load_config(string $config=null) {
         self::$PATH_PREFIX = include('env.php');
@@ -140,7 +143,9 @@ Class Utils {
     }
 
     public static function log_output($pid, string $output) {
-        file_put_contents(self::$PATH_PREFIX.'line_coverage_logs/'.$pid.'_output.txt', $output, FILE_APPEND);
+        if (LOG_OUTPUT) {
+            file_put_contents(self::$PATH_PREFIX.'line_coverage_logs/'.$pid.'_output.txt', $output, FILE_APPEND);
+        }
     }
 
     public static function log_forkinfo(string $forkinfo) {
