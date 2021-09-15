@@ -76,14 +76,12 @@ class AbstractTestClass extends TestCase
             $engine->diehard = false;
         }
         else {
-            throw new Exception($http_method . ' VERB isb not supported.');
+            throw new Exception($http_method . ' VERB is not supported.');
         }
         // Execute script
         $file_name = $file_name;
         $engine->start($file_name);
-        if (isset($engine->output)) {
-            $this->output = $engine->output;
-        }
+        $this->output = $engine->output ?? "";
         $this->coverage_info = $engine->lineLogger->coverage_info;
         $this->fork_info = $engine->fork_info;
     }
@@ -126,6 +124,6 @@ class AbstractTestClass extends TestCase
 
 class ReanimationCallback {
     public function add_reanimation_task() {
-        echo 'Called add_reanimation_task'.PHP_EOL;
+        echo 'Dummy reanimation callback invoked'.PHP_EOL;
     }
 }
