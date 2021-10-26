@@ -92,18 +92,14 @@ class AbstractTestClass extends TestCase
     }
     public function getForkedLines($filename)
     {
-        $lines = [];
         if (isset($this->fork_info)) {
-            foreach ($this->fork_info as $fork_info) {
-                if (isset($fork_info[$filename])) {
-                    $forked_line = $fork_info[$filename];
-                    if (!in_array($forked_line, $lines)) {
-                        $lines[] = $forked_line;
-                    }
+            foreach ($this->fork_info as $fork_filename => $fork_info) {
+                if ($filename === $fork_filename) {
+                    return $fork_info;
                 }
             }
         }
-        return $lines;
+        return [];
     }
     public function getCoverageInfo() {
         return $this->coverage_info;
