@@ -38,7 +38,7 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
                 $init_env['_COOKIE'] = [];
                 $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
                 $init_env['_GET'] = $parameters ?? [];
-                start_engine($init_env, $verb, $target_file, $reanimation_callback_object);
+                start_engine($init_env, $verb, $target_file, $reanimation_callback_object, null, null, 0, 4, false);
             }
         }
     }
@@ -63,7 +63,7 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
             $init_env['_GET'] = $log_entry['get'] ?? [];
             $init_env['_POST'] = $log_entry['post'] ?? [];
             $init_env['_REQUEST'] = array_merge($init_env['_GET'], $init_env['_POST'], $init_env['_COOKIE']);
-            start_engine($init_env, $verb, $target_file, $reanimation_callback_object, $options['reanimationarray'] ?? [], $options['verbosity']);
+            start_engine($init_env, $verb, $target_file, $reanimation_callback_object, $options['reanimationarray'] ?? [], $options['verbosity'], 0, 4, true);
         }
     }
 }
@@ -72,7 +72,7 @@ function reanimate(ReanimationState $reanimationState, IAnimateDeadWorker $reani
     start_engine($reanimationState->init_env, $reanimationState->httpverb, $reanimationState->targetfile, $reanimation_callback_object, $reanimationState->reanimation_array);
 }
 
-function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $execution_id=0, $verbosity=4) {
+function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $execution_id=0, $verbosity=4, $extended_logs_emulation_mode=false) {
     // Load config file
     Utils::$PATH_PREFIX = include('lib/AnimateDead/env.php');
     $config_file_path = Utils::get_default_config();
@@ -87,6 +87,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
 
     $engine = new PHPAnalyzer($init_env, $httpverb, $predefined_constants, $reanimation_callback_object, $correlation_id);
     $engine->execution_mode = ExecutionMode::ONLINE;
+    $engine->extended_logs_emulation_mode = $extended_logs_emulation_mode;
     // Reanimation mode is enabled
     if (is_array($reanimation_array) && count($reanimation_array) > 0) {
         $engine->reanimate = true;
