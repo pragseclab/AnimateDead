@@ -35,12 +35,12 @@ class AbstractTestClass extends TestCase
      * @param int|null $reanimation_id
      * @return void
      */
-    public function runScript(string $file_name, string $http_method, array $parameters = [], string $config_file='./config.json', ?int $reanimation_id = null, $extended_reanimation_logs_mode=false)
+    public function runScript(string $file_name, string $http_method, array $parameters = [], string $config_file='./config.json', ?int $reanimation_id = null, $extended_logs_emulation_mode=false)
     {
         // Parse config file
         $init_env = Utils::load_config($config_file);
         $predefined_constants = Utils::get_constants($config_file);
-        $symbolic_parameters = Utils::get_symbolic_parameters($http_method, $config_file);
+        $symbolic_parameters = Utils::get_symbolic_parameters($http_method, $extended_logs_emulation_mode, $config_file);
         $symbolic_functions = Utils::get_symbolic_functions($config_file);
         $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file);
         $symbolic_methods = Utils::get_symbolic_methods($config_file);
@@ -63,10 +63,15 @@ class AbstractTestClass extends TestCase
         // Prepare the engine
         $engine = new PHPAnalyzer($init_env, $http_method, $predefined_constants, new ReanimationCallback(), 'test');
         $engine->execution_mode = ExecutionMode::ONLINE;
-        $engine->extended_logs_emulation_mode = $extended_reanimation_logs_mode;
+        $engine->extended_logs_emulation_mode = $extended_logs_emulation_mode;
         $engine->direct_output = false;
         $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
-        $engine->symbolic_parameters = $symbolic_parameters;
+        if ($extended_logs_emulation_mode) {
+            $engine->symbolic_parameters_extended_logs_emulation_mode = $symbolic_parameters;
+        }
+        else {
+            $engine->symbolic_parameters = $symbolic_parameters;
+        }
         $engine->symbolic_functions = $symbolic_functions;
         $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
         $engine->symbolic_methods = $symbolic_methods;

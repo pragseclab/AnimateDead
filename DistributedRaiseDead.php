@@ -68,8 +68,8 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
     }
 }
 
-function reanimate(ReanimationState $reanimationState, IAnimateDeadWorker $reanimation_callback_object) {
-    start_engine($reanimationState->init_env, $reanimationState->httpverb, $reanimationState->targetfile, $reanimation_callback_object, $reanimationState->reanimation_array);
+function reanimate(ReanimationState $reanimationState, IAnimateDeadWorker $reanimation_callback_object, $extended_logs_emulation_mode) {
+    start_engine($reanimationState->init_env, $reanimationState->httpverb, $reanimationState->targetfile, $reanimation_callback_object, $reanimationState->reanimation_array, 'dummy', 0, 4, $extended_logs_emulation_mode);
 }
 
 function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $execution_id=0, $verbosity=4, $extended_logs_emulation_mode=false) {
@@ -97,7 +97,13 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
     $engine->verbose = 1;
     // Set engine's symbolic parameters
-    $engine->symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($httpverb), $config_file_path);
+    $symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($httpverb), $extended_logs_emulation_mode, $config_file_path);
+    if ($extended_logs_emulation_mode) {
+        $engine->symbolic_parameters_extended_logs_emulation_mode = $symbolic_parameters;
+    }
+    else {
+        $engine->symbolic_parameters = $symbolic_parameters;
+    }
     $engine->symbolic_functions = $symbolic_functions;
     $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
     $engine->symbolic_methods = $symbolic_methods;

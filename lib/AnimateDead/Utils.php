@@ -48,13 +48,18 @@ Class Utils {
         $defined_constants = unserialize(file_get_contents(self::get_current_dir().$config_json['constants']), ['allowed_classes' => false]);
         return $defined_constants;
     }
-    public static function get_symbolic_parameters(string $method='POST', string $config=null) {
+    public static function get_symbolic_parameters(string $method='POST', bool $extended_logs_emulation_mode=false, string $config=null) {
         if (!isset($config)) {
             $config = get_default_config();
         }
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);
-        $symbolic_parameters = $config_json['symbolic_parameters'];
+        if ($extended_logs_emulation_mode) {
+            $symbolic_parameters = $config_json['symbolic_parameters_extended_logs_emulation_mode'];
+        }
+        else {
+            $symbolic_parameters = $config_json['symbolic_parameters'];
+        }
         if (in_array($method, ['GET', 'HEAD', 'OPTIONS', 'TRACE'])) {
             return $symbolic_parameters['GET'] ?? [];
         }
