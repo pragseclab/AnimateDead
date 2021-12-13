@@ -55,7 +55,8 @@
     "mysqli_next_result",
     "mysqli_query",
     "mysqli_real_query",
-    "mysqli_send_query"
+    "mysqli_send_query",
+    "mysqli_connect_errno"
   ],
   "input_sensitive_symbolic_functions": [
     "mysql_affected_rows",
@@ -82,10 +83,12 @@
     "PDO/prepare",
     "PDOStatement/execute",
     "PMA\\libraries\\DatabaseInterface/getLink",
-    "PMA\\libraries\\DatabaseInterface/tryQuery"
+    "PMA\\libraries\\DatabaseInterface/tryQuery",
+    "mysqli/select_db"
   ],
   "symbolic_classes": [
-    "PDO"
+    "PDO",
+    "mysqli"
   ],
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
