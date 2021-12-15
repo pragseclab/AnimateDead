@@ -11,6 +11,6 @@ class SymbolicIsFileTest extends AbstractTestClass {
         $this->runScript($filename, $method, [], './test/config_symbolicvariable.json');
         $this->assertStringContainsString('symbolic_inclusion/symbolic_script_inclusion_1.test.php is a file', $this->output);
         $this->assertStringNotContainsString('symbolic_inclusion/symbolic_script_inclusion_1.test.php is not a file', $this->output);
-        $this->assertStringContainsString('non_existing/symbolic_script_inclusion_1.test.php is not a file', $this->output);
+        $this->assertStringContainsString('non_existing/symbolic_*.test.php is not a file', $this->output);
     }
 }
