@@ -12,5 +12,7 @@ class SymbolicRegexStringManipulationTest extends AbstractTestClass {
         $this->assertStringContainsString('all uppercase: LIBRARIES/PLUGINS/EXPORT_*.PHP', $this->output);
         $this->assertStringContainsString('all lowercase: libraries/plugins/export_*.php', $this->output);
         $this->assertStringContainsString('str_replace: libraries\\plugins\\Export_*.php', $this->output);
+        $this->assertStringContainsString('strtr: libraries-plugins-Export_*.php', $this->output);
+        $this->assertStringContainsString('str_index is l', $this->output);
     }
 }
