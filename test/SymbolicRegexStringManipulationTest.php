@@ -14,5 +14,7 @@ class SymbolicRegexStringManipulationTest extends AbstractTestClass {
         $this->assertStringContainsString('str_replace: libraries\\plugins\\Export_*.php', $this->output);
         $this->assertStringContainsString('strtr: libraries-plugins-Export_*.php', $this->output);
         $this->assertStringContainsString('str_index is l', $this->output);
+        $this->assertStringContainsString('symbolic_substr: plugins/Export_*.php', $this->output);
+        $this->assertStringContainsString('concrete_substr: plugins', $this->output);
     }
 }
