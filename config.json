@@ -23,11 +23,18 @@
       "_COOKIE",
       "_SESSION",
       "_POST"
-    ],
-    "GET.disabled": [
-    ],
-    "POST.disabled": [
     ]
+  },
+  "symbolic_parameters_extended_logs_emulation_mode": {
+    "GET": [
+      "_COOKIE",
+      "_SESSION"
+    ],
+    "POST": [
+      "_COOKIE",
+      "_SESSION",
+      "_POST"
+      ]
   },
   "symbolic_functions": [
     "mysqli_connect",
@@ -39,6 +46,7 @@
     "mysqli_num_rows",
     "mysql_affected_rows",
     "mysql_fetch_array",
+    "mysqli_fetch_array",
     "mysql_fetch_assoc",
     "mysql_fetch_field",
     "mysql_fetch_lengths",
@@ -84,6 +92,8 @@
     "PDOStatement/execute",
     "PMA\\libraries\\DatabaseInterface/getLink",
     "PMA\\libraries\\DatabaseInterface/tryQuery",
+    "PMA\\libraries\\DatabaseInterface/setVariable",
+    "PMA\\libraries\\DatabaseInterface/getVariable"
     "mysqli/select_db"
   ],
   "symbolic_classes": [
