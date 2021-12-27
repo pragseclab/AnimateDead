@@ -7,6 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use malmax\ExecutionMode;
 use malmax\PHPAnalyzer;
+use PHPEmul\SymbolicVariable;
 use PHPUnit\Framework\TestCase;
 use AnimateDead\Utils;
 
@@ -34,12 +35,12 @@ class AbstractTestClass extends TestCase
      * @param int|null $reanimation_id
      * @return void
      */
-    public function runScript(string $file_name, string $http_method, array $parameters = [], string $config_file='./config.json', ?int $reanimation_id = null)
+    public function runScript(string $file_name, string $http_method, array $parameters = [], string $config_file='./config.json', ?int $reanimation_id = null, $extended_logs_emulation_mode=false)
     {
         // Parse config file
         $init_env = Utils::load_config($config_file);
         $predefined_constants = Utils::get_constants($config_file);
-        $symbolic_parameters = Utils::get_symbolic_parameters($http_method, $config_file);
+        $symbolic_parameters = Utils::get_symbolic_parameters($http_method, $extended_logs_emulation_mode, $config_file);
         $symbolic_functions = Utils::get_symbolic_functions($config_file);
         $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file);
         $symbolic_methods = Utils::get_symbolic_methods($config_file);
@@ -47,12 +48,30 @@ class AbstractTestClass extends TestCase
         $input_sensitive_symbolic_methods = Utils::get_input_sensitive_symbolic_methods($config_file);
         $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file);
         $init_env['_SERVER']['REQUEST_METHOD'] = strtoupper($http_method);
+        foreach ($parameters as $param => $values) {
+            foreach ($values as $param_value) {
+                if (in_array($param, ['_POST', '_GET', '_COOKIE'])) {
+                    $init_env[$param][$param_value] = null;
+                    $init_env['_REQUEST'][$param] = null;
+                }
+                elseif ($param === '_SESSION') {
+                    $init_env['_SESSION'][$param] = null;
+                }
+            }
+
+        }
         // Prepare the engine
         $engine = new PHPAnalyzer($init_env, $http_method, $predefined_constants, new ReanimationCallback(), 'test');
         $engine->execution_mode = ExecutionMode::ONLINE;
+        $engine->extended_logs_emulation_mode = $extended_logs_emulation_mode;
         $engine->direct_output = false;
         $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
-        $engine->symbolic_parameters = $symbolic_parameters;
+        if ($extended_logs_emulation_mode) {
+            $engine->symbolic_parameters_extended_logs_emulation_mode = $symbolic_parameters;
+        }
+        else {
+            $engine->symbolic_parameters = $symbolic_parameters;
+        }
         $engine->symbolic_functions = $symbolic_functions;
         $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
         $engine->symbolic_methods = $symbolic_methods;
@@ -92,18 +111,14 @@ class AbstractTestClass extends TestCase
     }
     public function getForkedLines($filename)
     {
-        $lines = [];
         if (isset($this->fork_info)) {
-            foreach ($this->fork_info as $fork_info) {
-                if (isset($fork_info[$filename])) {
-                    $forked_line = $fork_info[$filename];
-                    if (!in_array($forked_line, $lines)) {
-                        $lines[] = $forked_line;
-                    }
+            foreach ($this->fork_info as $fork_filename => $fork_info) {
+                if ($filename === $fork_filename) {
+                    return $fork_info;
                 }
             }
         }
-        return $lines;
+        return [];
     }
     public function getCoverageInfo() {
         return $this->coverage_info;

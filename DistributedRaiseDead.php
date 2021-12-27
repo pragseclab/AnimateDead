@@ -40,6 +40,7 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
                 $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
                 $init_env['_GET'] = $parameters ?? [];
                 $init_env['_SERVER']['HTTP_REFERER'] = $referer;
+
                 start_engine($init_env, $verb, $target_file, $reanimation_callback_object, null, null, 0, 4, false);
             }
         }
@@ -91,6 +92,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file_path);
 
     $engine = new PHPAnalyzer($init_env, $httpverb, $predefined_constants, $reanimation_callback_object, $correlation_id);
+    $engine->execution_mode = ExecutionMode::ONLINE;
     $engine->extended_logs_emulation_mode = $extended_logs_emulation_mode;
     // Reanimation mode is enabled
     if (is_array($reanimation_array) && count($reanimation_array) > 0) {
