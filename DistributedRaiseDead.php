@@ -40,7 +40,7 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
                 $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
                 $init_env['_GET'] = $parameters ?? [];
                 $init_env['_SERVER']['HTTP_REFERER'] = $referer;
-                start_engine($init_env, $verb, $target_file, $reanimation_callback_object);
+                start_engine($init_env, $verb, $target_file, $reanimation_callback_object, null, null, 0, 4, false);
             }
         }
     }
