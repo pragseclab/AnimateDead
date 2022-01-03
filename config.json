@@ -27,13 +27,8 @@
   },
   "symbolic_parameters_extended_logs_emulation_mode": {
     "GET": [
-      "_COOKIE",
-      "_SESSION"
     ],
     "POST": [
-      "_COOKIE",
-      "_SESSION",
-      "_POST"
     ]
   },
   "symbolic_functions": [
