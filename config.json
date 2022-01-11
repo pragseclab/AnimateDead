@@ -22,7 +22,8 @@
     "POST": [
       "_COOKIE",
       "_SESSION",
-      "_POST"
+      "_POST",
+      "_FILES"
     ]
   },
   "symbolic_parameters_extended_logs_emulation_mode": {
