@@ -45,7 +45,7 @@
       "_COOKIE",
       "_SESSION",
       "_POST"
-      ]
+    ]
   },
   "symbolic_functions": [
     "mysqli_connect",
