@@ -1,3 +1,3 @@
 <?php
 
-return dirname(__FILE__).'/../../logs/';
+return __DIR__.'/../../logs/';
