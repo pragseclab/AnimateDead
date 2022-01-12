@@ -4,7 +4,8 @@
   "constants": "PHP56_constants.ser",
   "server": {
     "server_name": "localhost",
-    "server_addr":  "127.0.0.1",
+    "server_addr": "127.0.0.1",
+    "remote_addr": "172.21.0.1",
     "gateway_interface": "CGI/1.1",
     "server_software": "Apache/2.4.29 (Ubuntu)",
     "server_protocol": "HTTP/1.1",

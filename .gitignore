@@ -9,7 +9,6 @@ vendor/silverfoxy/malmax/index_logs.txt
 vendor/silverfoxy/malmax/output.txt
 vendor/silverfoxy/malmax/stats.txt
 vendor/silverfoxy/malmax/php-emul/cache/
-logs/
 
 .idea/
 

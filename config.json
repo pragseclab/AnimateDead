@@ -4,7 +4,8 @@
   "constants": "PHP56_constants.ser",
   "server": {
     "server_name": "localhost",
-    "server_addr":  "127.0.0.1",
+    "server_addr": "127.0.0.1",
+    "remote_addr": "172.21.0.1",
     "gateway_interface": "CGI/1.1",
     "server_software": "Apache/2.4.29 (Ubuntu)",
     "server_protocol": "HTTP/1.1",
@@ -22,10 +23,12 @@
       "_COOKIE",
       "_SESSION",
       "_POST"
+    ]
+  },
+  "symbolic_parameters_extended_logs_emulation_mode": {
+    "GET": [
     ],
-    "GET2": [
-    ],
-    "POST2": [
+    "POST": [
     ]
   },
   "symbolic_functions": [
@@ -38,6 +41,7 @@
     "mysqli_num_rows",
     "mysql_affected_rows",
     "mysql_fetch_array",
+    "mysqli_fetch_array",
     "mysql_fetch_assoc",
     "mysql_fetch_field",
     "mysql_fetch_lengths",
@@ -81,7 +85,9 @@
     "PDO/prepare",
     "PDOStatement/execute",
     "PMA\\libraries\\DatabaseInterface/getLink",
-    "PMA\\libraries\\DatabaseInterface/tryQuery"
+    "PMA\\libraries\\DatabaseInterface/tryQuery",
+    "PMA\\libraries\\DatabaseInterface/setVariable",
+    "PMA\\libraries\\DatabaseInterface/getVariable"
   ],
   "symbolic_classes": [
     "PDO"

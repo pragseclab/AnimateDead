@@ -8,6 +8,9 @@ use PHPEmul\ReanimationEntry;
 Class Utils {
 
     public static $PATH_PREFIX;
+    // Controls whether stdout is saved to a file.
+    // Occupies too much disk space, use only when required.
+    public const LOG_OUTPUT = false;
 
     public static function load_config(string $config=null) {
         self::$PATH_PREFIX = include('env.php');
@@ -27,6 +30,7 @@ Class Utils {
         $config_json = json_decode($config_json, true);
         $init_environ['_SERVER']['SERVER_NAME'] = $config_json['server']['server_name'];
         $init_environ['_SERVER']['SERVER_ADDR'] = $config_json['server']['server_addr'];
+        $init_environ['_SERVER']['REMOTE_ADDR'] = $config_json['server']['remote_addr'];
         $init_environ['_SERVER']['GATEWAY_INTERFACE'] = $config_json['server']['gateway_interface'];
         $init_environ['_SERVER']['SERVER_SOFTWARE'] = $config_json['server']['server_software'];
         $init_environ['_SERVER']['SERVER_PROTOCOL'] = $config_json['server']['server_protocol'];
@@ -44,13 +48,18 @@ Class Utils {
         $defined_constants = unserialize(file_get_contents(self::get_current_dir().$config_json['constants']), ['allowed_classes' => false]);
         return $defined_constants;
     }
-    public static function get_symbolic_parameters(string $method='POST', string $config=null) {
+    public static function get_symbolic_parameters(string $method='POST', bool $extended_logs_emulation_mode=false, string $config=null) {
         if (!isset($config)) {
             $config = get_default_config();
         }
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);
-        $symbolic_parameters = $config_json['symbolic_parameters'];
+        if ($extended_logs_emulation_mode) {
+            $symbolic_parameters = $config_json['symbolic_parameters_extended_logs_emulation_mode'];
+        }
+        else {
+            $symbolic_parameters = $config_json['symbolic_parameters'];
+        }
         if (in_array($method, ['GET', 'HEAD', 'OPTIONS', 'TRACE'])) {
             return $symbolic_parameters['GET'] ?? [];
         }
@@ -139,7 +148,9 @@ Class Utils {
     }
 
     public static function log_output($pid, string $output) {
-        // file_put_contents(self::$PATH_PREFIX.'line_coverage_logs/'.$pid.'_output.txt', $output, FILE_APPEND);
+        if (self::LOG_OUTPUT) {
+            file_put_contents(self::$PATH_PREFIX.'outputs/'.$pid.'_output.txt', $output, FILE_APPEND);
+        }
     }
 
     public static function log_forkinfo(string $forkinfo) {
