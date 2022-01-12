@@ -23,10 +23,12 @@
       "_COOKIE",
       "_SESSION",
       "_POST"
+    ]
+  },
+  "symbolic_parameters_extended_logs_emulation_mode": {
+    "GET": [
     ],
-    "GET.disabled": [
-    ],
-    "POST.disabled": [
+    "POST": [
     ]
   },
   "symbolic_functions": [
@@ -39,6 +41,7 @@
     "mysqli_num_rows",
     "mysql_affected_rows",
     "mysql_fetch_array",
+    "mysqli_fetch_array",
     "mysql_fetch_assoc",
     "mysql_fetch_field",
     "mysql_fetch_lengths",
@@ -82,7 +85,9 @@
     "PDO/prepare",
     "PDOStatement/execute",
     "PMA\\libraries\\DatabaseInterface/getLink",
-    "PMA\\libraries\\DatabaseInterface/tryQuery"
+    "PMA\\libraries\\DatabaseInterface/tryQuery",
+    "PMA\\libraries\\DatabaseInterface/setVariable",
+    "PMA\\libraries\\DatabaseInterface/getVariable"
   ],
   "symbolic_classes": [
     "PDO"

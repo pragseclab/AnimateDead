@@ -94,7 +94,7 @@ if (isset($argc) && !defined('DISTRIBUTED'))
                     // $engine->verbose = 4;
                 }
                 // Set engine's symbolic parameters
-                $engine->symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($log_entry->verb), $config_file_path);
+                $engine->symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($log_entry->verb), false, $config_file_path);
                 $engine->symbolic_functions = $symbolic_functions;
                 $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
                 $engine->symbolic_methods = $symbolic_methods;
@@ -188,7 +188,7 @@ if (isset($argc) && !defined('DISTRIBUTED'))
                 // $engine->verbose = 4;
             }
             // Set engine's symbolic parameters
-            $engine->symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($verb), $config_file_path);
+            $engine->symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($verb), true, $config_file_path);
             $engine->symbolic_functions = $symbolic_functions;
             $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
             $engine->symbolic_methods = $symbolic_methods;
