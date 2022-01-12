@@ -91,7 +91,8 @@
     "PMA\\libraries\\DatabaseInterface/getVariable"
   ],
   "symbolic_classes": [
-    "PDO"
+    "PDO",
+    "mysqli"
   ],
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
