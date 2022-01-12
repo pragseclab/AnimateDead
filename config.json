@@ -22,29 +22,14 @@
     "POST": [
       "_COOKIE",
       "_SESSION",
-      "_POST"
+      "_POST",
+      "_FILES"
     ]
   },
   "symbolic_parameters_extended_logs_emulation_mode": {
     "GET": [
-      "_COOKIE",
-      "_SESSION"
     ],
     "POST": [
-      "_COOKIE",
-      "_SESSION",
-      "_POST"
-    ]
-  },
-  "symbolic_parameters_extended_logs_emulation_mode": {
-    "GET": [
-      "_COOKIE",
-      "_SESSION"
-    ],
-    "POST": [
-      "_COOKIE",
-      "_SESSION",
-      "_POST"
     ]
   },
   "symbolic_functions": [
@@ -74,8 +59,7 @@
     "mysqli_next_result",
     "mysqli_query",
     "mysqli_real_query",
-    "mysqli_send_query",
-    "mysqli_connect_errno"
+    "mysqli_send_query"
   ],
   "input_sensitive_symbolic_functions": [
     "mysql_affected_rows",
@@ -105,7 +89,6 @@
     "PMA\\libraries\\DatabaseInterface/tryQuery",
     "PMA\\libraries\\DatabaseInterface/setVariable",
     "PMA\\libraries\\DatabaseInterface/getVariable"
-    "mysqli/select_db"
   ],
   "symbolic_classes": [
     "PDO",
