@@ -33,11 +33,14 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
                 $target_file = $log_entry->target_file;
                 $status_code = $log_entry->status;
                 $parameters = $log_entry->query_string_array;
+                $referer = $log_entry->referer;
 
                 $init_env['_SESSION'] = [];
                 $init_env['_COOKIE'] = [];
                 $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
                 $init_env['_GET'] = $parameters ?? [];
+                $init_env['_SERVER']['HTTP_REFERER'] = $referer;
+
                 start_engine($init_env, $verb, $target_file, $reanimation_callback_object, null, null, 0, 4, false);
             }
         }
@@ -54,12 +57,14 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
             array_walk($log_entry['session'], function(&$value, $key) {
                 $value = 'dummy';
             });
+            $referer = $log_entry->referer;
             array_walk($log_entry['cookie'], function(&$value, $key) {
                 $value = 'dummy';
             });
             $init_env['_SESSION'] = $log_entry['session'] ?? [];
             $init_env['_COOKIE'] = $log_entry['cookie'] ?? [];
             $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
+            $init_env['_SERVER']['HTTP_REFERER'] = $referer;
             $init_env['_GET'] = $log_entry['get'] ?? [];
             $init_env['_POST'] = $log_entry['post'] ?? [];
             $init_env['_REQUEST'] = array_merge($init_env['_GET'], $init_env['_POST'], $init_env['_COOKIE']);
