@@ -33,6 +33,11 @@
     ]
   },
   "symbolic_functions": [
+    "wp_cache_get",
+    "get_option",
+    "wp_load_alloptions",
+    "is_user_logged_in",
+    "current_user_can",
     "mysqli_connect",
     "mysqli_real_connect",
     "mysqli_init",
@@ -88,11 +93,22 @@
     "PMA\\libraries\\DatabaseInterface/getLink",
     "PMA\\libraries\\DatabaseInterface/tryQuery",
     "PMA\\libraries\\DatabaseInterface/setVariable",
-    "PMA\\libraries\\DatabaseInterface/getVariable"
+    "PMA\\libraries\\DatabaseInterface/getVariable",
+    "PMA\\libraries\\DatabaseInterface/fetchValue",
+    "PMA\\libraries\\DatabaseInterface/fetchResult",
+    "wpdb/get_row",
+    "wpdb/get_var",
+    "wpdb/get_results",
+    "wpdb/select",
+    "wpdb/update",
+    "wpdb/query",
+    "wpdb/_do_query",
+    "wpdb/delete"
   ],
   "symbolic_classes": [
     "PDO",
-    "mysqli"
+    "mysqli",
+    "wpdb"
   ],
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
