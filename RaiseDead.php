@@ -27,6 +27,7 @@ if (isset($argc) && !defined('DISTRIBUTED'))
     $symbolic_classes = Utils::get_symbolic_classes($config_file_path);
     $input_sensitive_symbolic_methods = Utils::get_input_sensitive_symbolic_methods($config_file_path);
     $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file_path);
+    $htaccess_bool = Utils::get_htaccess_bool($config_file_path);
     // Parse logs
     if (isset($options['l'])) {
         $log_file_path = $options['l'];
@@ -38,7 +39,7 @@ if (isset($argc) && !defined('DISTRIBUTED'))
         else {
             $filter_ip = '';
         }
-        $flows = parse_logs($log_file_path, $application_root_dir, $uri_prefix, $filter_ip);
+        $flows = parse_logs($log_file_path, $application_root_dir, $uri_prefix, $filter_ip, $htaccess_bool);
         // Setup execution engine
         $session_variables = [];
         $cookies = [];
@@ -182,6 +183,7 @@ if (isset($argc) && !defined('DISTRIBUTED'))
             }
             $engine->direct_output = false;
             $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
+#            $engine->htaccess_bool  = $htaccess_bool;
             // $engine->direct_output = true;
             if (isset($options['v'])) {
                 $engine->verbose = $options['v'];
@@ -254,10 +256,10 @@ function parse_extended_logs(string $log_file_path) {
     return $log_entries;
 }
 
-function parse_logs(string $log_file_path, string $application_root_dir, string $uri_prefix, string $filter_ip='') {
+function parse_logs(string $log_file_path, string $application_root_dir, string $uri_prefix, string $filter_ip='', bool $htaccess_bool) {
     $log_parser = new LogParser(array($log_file_path));
-    $log_parser->Parse();
-    $request2fs = new Request2FS($application_root_dir, $uri_prefix);
+    $log_parser->Parse($uri_prefix);
+    $request2fs = new Request2FS($application_root_dir);
     $log_lines = [];
     if ($filter_ip === '') {
         $flows = $log_parser->flow_aggregator->flows;
@@ -267,9 +269,9 @@ function parse_logs(string $log_file_path, string $application_root_dir, string 
     }
     foreach ($flows as $flow_ip) {
         foreach ($log_parser->flow_aggregator->flows[$flow_ip] as $flow_id => $log_entry) {
-            if (@$request2fs->GetTargetFile($log_entry->path) !== null) {
-                if (pathinfo($request2fs->GetTargetFile($log_entry->path), PATHINFO_EXTENSION) === 'php') {
-                    $log_entry->SetTargetFile($request2fs->GetTargetFile($log_entry->path));
+            if (@$request2fs->GetTargetFile($log_entry->path, $htaccess_bool) !== null) {
+                if (pathinfo($request2fs->GetTargetFile($log_entry->path, $htaccess_bool), PATHINFO_EXTENSION) === 'php') {
+                    $log_entry->SetTargetFile($request2fs->GetTargetFile($log_entry->path,$htaccess_bool));
                     // $log_lines[$log_entry->path] = $log_entry->verb . ':' . $log_entry->target_file . ':' . $log_entry->status;
                     $log_lines[$log_entry->path] = $log_entry->target_file;
                 } else {

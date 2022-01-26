@@ -16,12 +16,15 @@ class LogParser
         $this->parser->setFormat($log_format);
     }
 
-    public function Parse() {
+    public function Parse($uri_prefix) {
         foreach ($this->log_files as $log_file) {
             $lines = file($log_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             foreach ($lines as $line) {
                 try {
-                    $this->log_entries[] = new LogEntry($this->parser->parse($line));
+                    $log_entry = new LogEntry($this->parser->parse($line), $uri_prefix);
+                    if($log_entry->path !== null) {
+                        $this->log_entries[] = $log_entry;
+                    }
                 } catch (\Throwable $th) {
                     //TODO: Catch \Kassner\LogParser\FormatException if a line doesn't match the format
                     throw $th;
