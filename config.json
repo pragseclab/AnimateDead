@@ -22,7 +22,8 @@
     "POST": [
       "_COOKIE",
       "_SESSION",
-      "_POST"
+      "_POST",
+      "_FILES"
     ]
   },
   "symbolic_parameters_extended_logs_emulation_mode": {
@@ -88,8 +89,7 @@
     "PMA\\libraries\\DatabaseInterface/getLink",
     "PMA\\libraries\\DatabaseInterface/tryQuery",
     "PMA\\libraries\\DatabaseInterface/setVariable",
-    "PMA\\libraries\\DatabaseInterface/getVariable",
-    "mysqli/select_db"
+    "PMA\\libraries\\DatabaseInterface/getVariable"
   ],
   "symbolic_classes": [
     "PDO",
@@ -100,4 +100,4 @@
   ],
   "symbolic_loop_iteration": 2,
   "htaccess": 1
-  }
+}
