@@ -10,6 +10,7 @@ ini_set("memory_limit",-1);
 require __DIR__.'/vendor/autoload.php';
 define('DISTRIBUTED', true);
 include 'RaiseDead.php';
+include 'lib/AnimateDead/Utils.php';
 include 'ReanimationState.php';
 
 function raise_the_dead(array $options, $reanimation_callback_object=null) {
@@ -26,18 +27,19 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
     // Normal logs
     if (isset($options['log'])) {
         $log_file_path = $options['log'];
-        $flows = parse_logs($log_file_path, $application_root_dir, $uri_prefix, $filter_ip);
+        $flows = parse_logs($log_file_path, $application_root_dir, $uri_prefix, $filter_ip, $htaccess_bool);
         foreach ($flows as $flow) {
             foreach ($flow as $log_entry) {
                 $verb = $log_entry->verb;
                 $target_file = $log_entry->target_file;
                 $status_code = $log_entry->status;
                 $parameters = $log_entry->query_string_array;
+                $uri = $log_entry->path;
                 $referer = $log_entry->referer;
-
                 $init_env['_SESSION'] = [];
                 $init_env['_COOKIE'] = [];
                 $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
+                $init_env['_SERVER']['REQUEST_URI'] = $uri;
                 $init_env['_GET'] = $parameters ?? [];
                 $init_env['_SERVER']['HTTP_REFERER'] = $referer;
 
@@ -58,12 +60,14 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
                 $value = 'dummy';
             });
             $referer = $log_entry->referer;
+            $uri = $log_entry->path;
             array_walk($log_entry['cookie'], function(&$value, $key) {
                 $value = 'dummy';
             });
             $init_env['_SESSION'] = $log_entry['session'] ?? [];
             $init_env['_COOKIE'] = $log_entry['cookie'] ?? [];
             $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
+            $init_env['_SERVER']['REQUEST_URI'] = $uri;
             $init_env['_SERVER']['HTTP_REFERER'] = $referer;
             $init_env['_GET'] = $log_entry['get'] ?? [];
             $init_env['_POST'] = $log_entry['post'] ?? [];
@@ -82,7 +86,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     Utils::$PATH_PREFIX = include('lib/AnimateDead/env.php');
     $config_file_path = Utils::get_default_config();
     // array_replace instead of array_merge to prevent duplicates while reanimation.
-    $init_env = array_replace_recursive($init_env, Utils::load_config($config_file_path));
+    $init_env = array_replace_recursive(Utils::load_config($config_file_path), $init_env);
     $predefined_constants = Utils::get_constants($config_file_path);
     $symbolic_functions = Utils::get_symbolic_functions($config_file_path);
     $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file_path);

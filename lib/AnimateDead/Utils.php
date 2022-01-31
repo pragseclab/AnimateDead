@@ -29,6 +29,8 @@ Class Utils {
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);
         $init_environ['_SERVER']['SERVER_NAME'] = $config_json['server']['server_name'];
+        $init_environ['_SERVER']['HTTP_HOST'] = $config_json['server']['http_host'];
+        $init_environ['_SERVER']['HTTP_X_FORWARDED_PROTO'] = $config_json['server']['http_x_forwarded_proto'];
         $init_environ['_SERVER']['SERVER_ADDR'] = $config_json['server']['server_addr'];
         $init_environ['_SERVER']['REMOTE_ADDR'] = $config_json['server']['remote_addr'];
         $init_environ['_SERVER']['GATEWAY_INTERFACE'] = $config_json['server']['gateway_interface'];
@@ -113,7 +115,7 @@ Class Utils {
         $input_sensitive_symbolic_functions = $config_json['input_sensitive_symbolic_functions'];
         return $input_sensitive_symbolic_functions;
     }
-    public static function get_input_sensitive_symbolic_methods(string $config=_null) {
+    public static function get_input_sensitive_symbolic_methods(string $config=null) {
         if (!isset($config)) {
             $config = get_default_config();
         }
@@ -132,6 +134,15 @@ Class Utils {
         return $symbolic_methods;
     }
 
+    public static function get_htaccess_bool(string $config=null) {
+        if (!isset($config)) {
+            $config = self::get_default_config();
+        }
+        $config_json = file_get_contents($config);
+        $config_json = json_decode($config_json, true);
+        $htaccess_bool = $config_json['htaccess'];
+        return $htaccess_bool;
+    }
     public static function get_symbolic_classes(string $config=__DIR__ .'/config.json') {
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);

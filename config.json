@@ -4,6 +4,8 @@
   "constants": "PHP56_constants.ser",
   "server": {
     "server_name": "localhost",
+    "http_host": "localhost",
+    "http_x_forwarded_proto": "http",
     "server_addr": "127.0.0.1",
     "remote_addr": "172.21.0.1",
     "gateway_interface": "CGI/1.1",
@@ -64,7 +66,8 @@
     "mysqli_next_result",
     "mysqli_query",
     "mysqli_real_query",
-    "mysqli_send_query"
+    "mysqli_send_query",
+    "mysqli_connect_errno"
   ],
   "input_sensitive_symbolic_functions": [
     "mysql_affected_rows",
@@ -113,5 +116,6 @@
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
   ],
-  "symbolic_loop_iteration": 2
+  "symbolic_loop_iteration": 2,
+  "htaccess": 1
 }

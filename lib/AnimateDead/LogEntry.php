@@ -17,14 +17,14 @@ class LogEntry {
     public $uagent;
     public $target_file;
 
-    public function __construct($log_entry_stdclass) {
+    public function __construct($log_entry_stdclass, $request_uri_prefix) {
         $this->host = $log_entry_stdclass->host;
         $this->logname = $log_entry_stdclass->logname;
         $this->user = $log_entry_stdclass->user;
         $this->datetime = $log_entry_stdclass->time;
         $this->request = $log_entry_stdclass->request;
         $this->query_string_array = LogEntry::ExtractQueryString($this->request);
-        $this->path = LogEntry::ExtractRequestPath($this->request);
+        $this->path = LogEntry::ExtractRequestPath($this->request, $request_uri_prefix);
         $this->verb = LogEntry::ExtractRequestVerb($this->request);
         $this->status = $log_entry_stdclass->status;
         $this->length = $log_entry_stdclass->sentBytes;
@@ -36,13 +36,15 @@ class LogEntry {
         $this->target_file = $target_file;
     }
 
-    public static function ExtractRequestPath($request): ?string {
-        $url_segments = explode('?', $request);
-        if (explode(' ', $url_segments[0])) {
-
+    public static function ExtractRequestPath($request, $request_uri_prefix): ?string {
+        $request_path = explode(' ', $request)[1];
+        if (str_starts_with($request_path, $request_uri_prefix)) {
+            $uri = substr($request_path, strlen($request_uri_prefix));
+            return $uri;
         }
-        $request_path = explode(' ', $url_segments[0])[1];
-        return $request_path;
+        else {
+            return null;
+        }
     }
 
     public static function ExtractRequestVerb($request): string {
