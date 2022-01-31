@@ -12,3 +12,6 @@ if (!isset($_POST['set_param'])) {
 else {
     echo '_POST["set_param"] is set';
 }
+if (empty($_COOKIE['ck'])) {
+    echo '_COOKIE["ck"] is empty';
+}

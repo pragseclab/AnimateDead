@@ -13,6 +13,7 @@ class IssetSymbolicSuperGlobalExtendedLogsModeTest extends AbstractTestClass {
         $this->assertStringNotContainsString('_POST["not_set_param"] is set', $this->output);
         $this->assertStringContainsString('_POST["set_param"] is set', $this->output);
         $this->assertStringNotContainsString('_POST["set_param"] is not set', $this->output);
+        $this->assertStringContainsString('_COOKIE["ck"] is empty', $this->output);
 
         $fork_info = $this->getForkInfo();
         $forked_lines = array_pop($fork_info);
