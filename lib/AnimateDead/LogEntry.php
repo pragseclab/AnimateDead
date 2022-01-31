@@ -24,7 +24,7 @@ class LogEntry {
         $this->datetime = $log_entry_stdclass->time;
         $this->request = $log_entry_stdclass->request;
         $this->query_string_array = LogEntry::ExtractQueryString($this->request);
-        $this->path = LogEntry::ExtractRequestPath($this->request,$request_uri_prefix);
+        $this->path = LogEntry::ExtractRequestPath($this->request, $request_uri_prefix);
         $this->verb = LogEntry::ExtractRequestVerb($this->request);
         $this->status = $log_entry_stdclass->status;
         $this->length = $log_entry_stdclass->sentBytes;
