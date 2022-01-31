@@ -22,6 +22,7 @@ class Request2FS {
             curl_setopt($curl, CURLOPT_URL, $url . '?a=1');
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             $res = curl_exec($curl);
+            $res = str_replace("/var/www/html/", "../debloating_templates/app/", $res);
             return $res;
         }
         if (file_exists($full_path)) {

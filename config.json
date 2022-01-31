@@ -4,6 +4,8 @@
   "constants": "PHP56_constants.ser",
   "server": {
     "server_name": "localhost",
+    "http_host": "localhost",
+    "http_x_forwarded_proto": "http",
     "server_addr": "127.0.0.1",
     "remote_addr": "172.21.0.1",
     "gateway_interface": "CGI/1.1",

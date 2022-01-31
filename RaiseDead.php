@@ -65,10 +65,13 @@ if (isset($argc) && !defined('DISTRIBUTED'))
                 $target_file = $log_entry->target_file;
                 $status_code = $log_entry->status;
                 $parameters = $log_entry->query_string_array;
-
+                $uri= $log_entry->path;
                 $init_env['_SESSION'] = $session_variables;
                 $init_env['_COOKIE'] = $cookies;
                 $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
+                $init_env['_SERVER']['REQUEST_URI'] = $uri;
+                $init_env['_SERVER']['SCRIPT_FILENAME'] = $target_file;
+                $init_env['_SERVER']['SCRIPT_NAME'] = "/" . basename($target_file);
                 $init_env['_GET'] = $parameters ?? [];
                 // $init_env['_POST'] = ['pma_username'=>'root',
                 //                       'pma_password'=>'root',

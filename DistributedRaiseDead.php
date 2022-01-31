@@ -60,12 +60,14 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
                 $value = 'dummy';
             });
             $referer = $log_entry->referer;
+            $uri = $log_entry->path;
             array_walk($log_entry['cookie'], function(&$value, $key) {
                 $value = 'dummy';
             });
             $init_env['_SESSION'] = $log_entry['session'] ?? [];
             $init_env['_COOKIE'] = $log_entry['cookie'] ?? [];
             $init_env['_SERVER']['REQUEST_METHOD'] = $verb;
+            $init_env['_SERVER']['REQUEST_URI'] = $uri;
             $init_env['_SERVER']['HTTP_REFERER'] = $referer;
             $init_env['_GET'] = $log_entry['get'] ?? [];
             $init_env['_POST'] = $log_entry['post'] ?? [];
@@ -84,7 +86,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     Utils::$PATH_PREFIX = include('lib/AnimateDead/env.php');
     $config_file_path = Utils::get_default_config();
     // array_replace instead of array_merge to prevent duplicates while reanimation.
-    $init_env = array_replace_recursive($init_env, Utils::load_config($config_file_path));
+    $init_env = array_replace_recursive(Utils::load_config($config_file_path),$init_env);
     $predefined_constants = Utils::get_constants($config_file_path);
     $symbolic_functions = Utils::get_symbolic_functions($config_file_path);
     $input_sensitive_symbolic_functions = Utils::get_input_sensitive_symbolic_functions($config_file_path);

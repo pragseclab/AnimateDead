@@ -29,6 +29,8 @@ Class Utils {
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);
         $init_environ['_SERVER']['SERVER_NAME'] = $config_json['server']['server_name'];
+        $init_environ['_SERVER']['HTTP_HOST'] = $config_json['server']['http_host'];
+        $init_environ['_SERVER']['HTTP_X_FORWARDED_PROTO'] = $config_json['server']['http_x_forwarded_proto'];
         $init_environ['_SERVER']['SERVER_ADDR'] = $config_json['server']['server_addr'];
         $init_environ['_SERVER']['REMOTE_ADDR'] = $config_json['server']['remote_addr'];
         $init_environ['_SERVER']['GATEWAY_INTERFACE'] = $config_json['server']['gateway_interface'];
@@ -196,5 +198,9 @@ Class Utils {
 
      public static function get_default_config() {
         return __DIR__.'/../../config.json';
+    }
+
+    public static function get_current_dir() {
+        return self::$PATH_PREFIX.'../';
     }
 }
