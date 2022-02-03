@@ -9,6 +9,9 @@
       "email": "baminazad@cs.stonybrook.edu"
     }
   ],
+  "github-oauth": {
+	"github.com": "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"
+  },
   "repositories": [
     {
       "type": "vcs",
