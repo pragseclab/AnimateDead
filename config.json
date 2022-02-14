@@ -117,5 +117,5 @@
     "mysqli/query"
   ],
   "symbolic_loop_iteration": 2,
-  "htaccess": 1
+  "htaccess": 0
 }
