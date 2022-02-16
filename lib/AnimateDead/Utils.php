@@ -197,7 +197,7 @@ Class Utils {
     }
 
     public static function get_default_config() {
-        return self::get_current_dir().'config.json';
+        return __DIR__.'/../../config.json';
     }
 
     public static function get_current_dir() {
