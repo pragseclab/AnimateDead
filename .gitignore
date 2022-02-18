@@ -1,4 +1,5 @@
 access_log_test.txt
+config.json
 phpunit.xml.dist.bak
 composer.lock
 index_logs.txt
