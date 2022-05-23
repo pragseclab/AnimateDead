@@ -43,7 +43,7 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
                 $init_env['_GET'] = $parameters ?? [];
                 $init_env['_SERVER']['HTTP_REFERER'] = $referer;
 
-                start_engine($init_env, $verb, $target_file, $reanimation_callback_object, null, null, 0, 4, false);
+                start_engine($init_env, $verb, $target_file, $reanimation_callback_object, null, null, 0, 4, false, 100);
             }
         }
     }
@@ -72,7 +72,7 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
             $init_env['_GET'] = $log_entry['get'] ?? [];
             $init_env['_POST'] = $log_entry['post'] ?? [];
             $init_env['_REQUEST'] = array_merge($init_env['_GET'], $init_env['_POST'], $init_env['_COOKIE']);
-            start_engine($init_env, $verb, $target_file, $reanimation_callback_object, $options['reanimationarray'] ?? [], $options['verbosity'], 0, 4, true);
+            start_engine($init_env, $verb, $target_file, $reanimation_callback_object, $options['reanimationarray'] ?? [], $options['verbosity'], 0, 4, true, 100);
         }
     }
 }
@@ -81,7 +81,7 @@ function reanimate(ReanimationState $reanimationState, IAnimateDeadWorker $reani
     start_engine($reanimationState->init_env, $reanimationState->httpverb, $reanimationState->targetfile, $reanimation_callback_object, $reanimationState->reanimation_array, 'dummy', 0, 4, $extended_logs_emulation_mode);
 }
 
-function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $execution_id=0, $verbosity=4, $extended_logs_emulation_mode=false) {
+function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $execution_id=0, $verbosity=4, $extended_logs_emulation_mode=false, $current_priority=null) {
     // Load config file
     Utils::$PATH_PREFIX = include('lib/AnimateDead/env.php');
     $config_file_path = Utils::get_default_config();
@@ -114,6 +114,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     else {
         $engine->symbolic_parameters = $symbolic_parameters;
     }
+    $engine->current_priority = $current_priority;
     $engine->symbolic_functions = $symbolic_functions;
     $engine->input_sensitive_symbolic_functions = $input_sensitive_symbolic_functions;
     $engine->symbolic_methods = $symbolic_methods;
