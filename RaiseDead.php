@@ -242,7 +242,7 @@ elseif (!defined('DISTRIBUTED')) {
     die($usage);
 }
 
-function parse_extended_logs(string $log_file_path) {
+function parse_extended_logs(string $log_file_path, bool $htaccess_bool) {
     $lines = file($log_file_path);
     $log_entries = [];
     $serialized_entry = '';
