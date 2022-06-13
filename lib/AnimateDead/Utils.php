@@ -105,7 +105,7 @@ Class Utils {
         }
         $config_json = file_get_contents($config);
         $config_json = json_decode($config_json, true);
-        $fork_on_symbolic_in_array = $config_json['fork_on_symbolic_in_array_config'];
+        $fork_on_symbolic_in_array = $config_json['fork_on_symbolic_in_array'];
         return $fork_on_symbolic_in_array;
     }
 
