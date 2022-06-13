@@ -118,5 +118,6 @@
     "mysqli/query"
   ],
   "symbolic_loop_iteration": 2,
-  "htaccess": 0
+  "htaccess": 0,
+  "fork_on_symbolic_in_array": false
 }
