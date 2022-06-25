@@ -94,6 +94,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     $symbolic_classes = Utils::get_symbolic_classes($config_file_path);
     $input_sensitive_symbolic_methods = Utils::get_input_sensitive_symbolic_methods($config_file_path);
     $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file_path);
+    $fork_on_symbolic_in_array = Utils::get_fork_on_symbolic_in_array_config($config_file_path);
 
     $engine = new PHPAnalyzer($init_env, $httpverb, $predefined_constants, $reanimation_callback_object, $correlation_id);
     $engine->execution_mode = ExecutionMode::ONLINE;
@@ -105,6 +106,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     }
     $engine->direct_output = false;
     $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
+    $engine->fork_on_symbolic_in_array = $fork_on_symbolic_in_array;
     $engine->verbose = 1;
     // Set engine's symbolic parameters
     $symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($httpverb), $extended_logs_emulation_mode, $config_file_path);

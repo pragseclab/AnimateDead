@@ -27,6 +27,7 @@ if (isset($argc) && !defined('DISTRIBUTED'))
     $symbolic_classes = Utils::get_symbolic_classes($config_file_path);
     $input_sensitive_symbolic_methods = Utils::get_input_sensitive_symbolic_methods($config_file_path);
     $symbolic_loop_iterations = Utils::get_symbolic_loop_iterations($config_file_path);
+    $fork_on_symbolic_in_array = Utils::get_fork_on_symbolic_in_array_config($config_file_path);
     $htaccess_bool = Utils::get_htaccess_bool($config_file_path);
     // Parse logs
     if (isset($options['l'])) {
@@ -92,6 +93,7 @@ if (isset($argc) && !defined('DISTRIBUTED'))
                 }
                 $engine->direct_output = false;
                 $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
+                $engine->fork_on_symbolic_in_array = $fork_on_symbolic_in_array;
                 // $engine->direct_output = true;
                 if (isset($options['v'])) {
                     $engine->verbose = $options['v'];
@@ -186,6 +188,7 @@ if (isset($argc) && !defined('DISTRIBUTED'))
             }
             $engine->direct_output = false;
             $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
+            $engine->fork_on_symbolic_in_array = $fork_on_symbolic_in_array;
 #            $engine->htaccess_bool  = $htaccess_bool;
             // $engine->direct_output = true;
             if (isset($options['v'])) {
