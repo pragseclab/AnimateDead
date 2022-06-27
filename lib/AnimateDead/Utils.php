@@ -88,6 +88,7 @@ Class Utils {
         $max_output_length = $config_json['max_output_length'];
         return $max_output_length;
     }
+
     public static function get_symbolic_loop_iterations(string $config=null) {
         if (!isset($config)) {
             $config = get_default_config();
@@ -97,6 +98,17 @@ Class Utils {
         $symbolic_loop_iteration = $config_json['symbolic_loop_iteration'];
         return $symbolic_loop_iteration;
     }
+
+    public static function get_fork_on_symbolic_in_array_config(string $config=null) {
+        if (!isset($config)) {
+            $config = get_default_config();
+        }
+        $config_json = file_get_contents($config);
+        $config_json = json_decode($config_json, true);
+        $fork_on_symbolic_in_array = $config_json['fork_on_symbolic_in_array'];
+        return $fork_on_symbolic_in_array;
+    }
+
     public static function get_symbolic_functions(string $config=null) {
         if (!isset($config)) {
             $config = get_default_config();
