@@ -112,12 +112,13 @@
   "symbolic_classes": [
     "PDO",
     "mysqli",
-    "wpdb"
+    "wpdb",
+    "DBIMysqli",
+    "DBIMysql"
   ],
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
   ],
   "symbolic_loop_iteration": 2,
-  "htaccess": 0,
-  "fork_on_symbolic_in_array": false
+  "htaccess": 0
 }
