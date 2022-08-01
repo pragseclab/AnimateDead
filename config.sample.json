@@ -113,8 +113,9 @@
     "PDO",
     "mysqli",
     "wpdb",
-    "DBIMysqli",
-    "DBIMysql"
+    "PMA\\libraries\\dbi\\DBIMysqli",
+    "PMA\\libraries\\dbi\\DBIMysql",
+    "PMA\\libraries\\DatabaseInterface"
   ],
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
