@@ -96,6 +96,7 @@
     "PDOStatement/execute",
     "PMA\\libraries\\DatabaseInterface/getLink",
     "PMA\\libraries\\DatabaseInterface/tryQuery",
+    "PMA\\libraries\\DatabaseInterface/query",
     "PMA\\libraries\\DatabaseInterface/setVariable",
     "PMA\\libraries\\DatabaseInterface/getVariable",
     "PMA\\libraries\\DatabaseInterface/fetchValue",
@@ -115,7 +116,6 @@
     "wpdb",
     "PMA\\libraries\\dbi\\DBIMysqli",
     "PMA\\libraries\\dbi\\DBIMysql",
-    "PMA\\libraries\\DatabaseInterface"
   ],
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
