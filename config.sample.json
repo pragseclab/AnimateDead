@@ -115,7 +115,7 @@
     "mysqli",
     "wpdb",
     "PMA\\libraries\\dbi\\DBIMysqli",
-    "PMA\\libraries\\dbi\\DBIMysql",
+    "PMA\\libraries\\dbi\\DBIMysql"
   ],
   "input_sensitive_symbolic_methods": [
     "mysqli/query"
