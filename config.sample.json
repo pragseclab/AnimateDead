@@ -97,6 +97,7 @@
     "PMA\\libraries\\DatabaseInterface/getLink",
     "PMA\\libraries\\DatabaseInterface/tryQuery",
     "PMA\\libraries\\DatabaseInterface/query",
+    "PMA\\libraries\\DatabaseInterface/getColumns",
     "PMA\\libraries\\DatabaseInterface/setVariable",
     "PMA\\libraries\\DatabaseInterface/getVariable",
     "PMA\\libraries\\DatabaseInterface/fetchValue",
