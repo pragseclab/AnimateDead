@@ -43,7 +43,7 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
                 $init_env['_GET'] = $parameters ?? [];
                 $init_env['_SERVER']['HTTP_REFERER'] = $referer;
 
-                start_engine($init_env, $verb, $target_file, $reanimation_callback_object, null, null, 0, 4, false, 100);
+                start_engine($init_env, $verb, $target_file, $reanimation_callback_object, null, null, 0, 0, 4, false, 100);
             }
         }
     }
@@ -72,16 +72,16 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
             $init_env['_GET'] = $log_entry['get'] ?? [];
             $init_env['_POST'] = $log_entry['post'] ?? [];
             $init_env['_REQUEST'] = array_merge($init_env['_GET'], $init_env['_POST'], $init_env['_COOKIE']);
-            start_engine($init_env, $verb, $target_file, $reanimation_callback_object, $options['reanimationarray'] ?? [], $options['verbosity'], 0, 4, true, 100);
+            start_engine($init_env, $verb, $target_file, $reanimation_callback_object, $options['reanimationarray'] ?? [], $options['verbosity'], 0, 0, 4, true, 100);
         }
     }
 }
 
 function reanimate(ReanimationState $reanimationState, IAnimateDeadWorker $reanimation_callback_object, $extended_logs_emulation_mode) {
-    start_engine($reanimationState->init_env, $reanimationState->httpverb, $reanimationState->targetfile, $reanimation_callback_object, $reanimationState->reanimation_array, 'dummy', 0, 4, $extended_logs_emulation_mode);
+    start_engine($reanimationState->init_env, $reanimationState->httpverb, $reanimationState->targetfile, $reanimation_callback_object, $reanimationState->reanimation_array, 'dummy', 0, 0, 4, $extended_logs_emulation_mode);
 }
 
-function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $execution_id=0, $verbosity=4, $extended_logs_emulation_mode=false, $current_priority=null) {
+function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_object=null, $reanimation_array=null, $correlation_id='dummy', $execution_id=0, $parent_id=0, $verbosity=4, $extended_logs_emulation_mode=false, $current_priority=null) {
     // Load config file
     Utils::$PATH_PREFIX = include('lib/AnimateDead/env.php');
     $config_file_path = Utils::get_default_config();
@@ -107,6 +107,7 @@ function start_engine($init_env, $httpverb, $targetfile, $reanimation_callback_o
     $engine->direct_output = false;
     $engine->symbolic_loop_iterations = $symbolic_loop_iterations;
     $engine->fork_on_symbolic_in_array = $fork_on_symbolic_in_array;
+    $engine->parent_execution_id = $parent_id;
     $engine->verbose = 1;
     // Set engine's symbolic parameters
     $symbolic_parameters = Utils::get_symbolic_parameters(strtoupper($httpverb), $extended_logs_emulation_mode, $config_file_path);
