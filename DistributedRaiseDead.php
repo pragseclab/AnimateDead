@@ -59,8 +59,8 @@ function raise_the_dead(array $options, $reanimation_callback_object=null) {
             array_walk($log_entry['session'], function(&$value, $key) {
                 $value = 'dummy';
             });
-            $referer = $log_entry->referer;
-            $uri = $log_entry->path;
+            $referer = $log_entry['referer'];
+            $uri = $log_entry['path'];
             array_walk($log_entry['cookie'], function(&$value, $key) {
                 $value = 'dummy';
             });
