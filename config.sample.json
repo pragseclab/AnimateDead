@@ -91,26 +91,30 @@
     "mysqli_real_query",
     "mysqli_send_query"
   ],
-  "symbolic_methods": [
-    "PDO/prepare",
-    "PDOStatement/execute",
-    "PMA\\libraries\\DatabaseInterface/getLink",
-    "PMA\\libraries\\DatabaseInterface/tryQuery",
-    "PMA\\libraries\\DatabaseInterface/query",
-    "PMA\\libraries\\DatabaseInterface/getColumns",
-    "PMA\\libraries\\DatabaseInterface/setVariable",
-    "PMA\\libraries\\DatabaseInterface/getVariable",
-    "PMA\\libraries\\DatabaseInterface/fetchValue",
-    "PMA\\libraries\\DatabaseInterface/fetchResult",
-    "wpdb/get_row",
-    "wpdb/get_var",
-    "wpdb/get_results",
-    "wpdb/select",
-    "wpdb/update",
-    "wpdb/query",
-    "wpdb/_do_query",
-    "wpdb/delete"
-  ],
+  "symbolic_methods": {
+    "PDO/prepare":[],
+    "PDOStatement/execute":[],
+    "PMA\\libraries\\DatabaseInterface/getLink":[],
+    "PMA\\libraries\\DatabaseInterface/tryQuery":[],
+    "PMA\\libraries\\DatabaseInterface/query":[],
+    "PMA\\libraries\\DatabaseInterface/getColumns":[],
+    "PMA\\libraries\\DatabaseInterface/setVariable":[],
+    "PMA\\libraries\\DatabaseInterface/getVariable":[],
+    "PMA\\libraries\\DatabaseInterface/fetchValue":[],
+    "PMA\\libraries\\DatabaseInterface/fetchResult":[],
+    "wpdb/get_row":[],
+    "wpdb/get_var":[],
+    "wpdb/get_results":[],
+    "wpdb/select":[],
+    "wpdb/update":[],
+    "wpdb/query":[],
+    "wpdb/_do_query":[],
+    "wpdb/delete":[],
+    "mysqli/query":
+    "mysqli_result",
+    "Dbl_Result/fetch_object":
+    "mysqli_result"
+  },
   "symbolic_classes": [
     "PDO",
     "mysqli",
@@ -122,5 +126,5 @@
     "mysqli/query"
   ],
   "symbolic_loop_iteration": 2,
-  "htaccess": 0
+  "htaccess": 1
 }
